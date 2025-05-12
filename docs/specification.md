@@ -93,7 +93,6 @@
 - **Framework :** Django + Django Rest Framework
 
 **Fonctionnalités :**
-
 - API sécurisée pour la gestion des projets, utilisateurs, devis, factures
 - Authentification JWT
 - Intégration avec Odoo via API
