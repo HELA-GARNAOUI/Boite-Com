@@ -1,22 +1,26 @@
-📘 Cahier des Charges – Boîte de Communication Digitale
-🧾 1. Présentation Générale
-Boite Com 
-Commanditaire : (Vous-même / Entreprise X)
-Type de projet : Création d'une agence digitale spécialisée en création web, SEO, gestion de réseaux sociaux et intégration d'un ERP.
+# 📘 Cahier des Charges – Boîte de Communication Digitale
 
-🎯 2. Objectifs du Projet
-Proposer aux clients des services professionnels de communication digitale.
+## 🧾 1. Présentation Générale
 
-Disposer d'une plateforme web moderne pour présenter les services de l’agence.
+**Boite Com**  
+**Commanditaire :** (Vous-même / Entreprise X)  
+**Type de projet :** Création d'une agence digitale spécialisée en création web, SEO, gestion de réseaux sociaux et intégration d'un ERP.
 
-Mettre en place un back-office ERP (Odoo) pour la gestion commerciale, RH et CRM.
+---
 
-Automatiser la communication client via site web, emails, réseaux sociaux.
+## 🎯 2. Objectifs du Projet
 
-Assurer la visibilité et le positionnement SEO de l’agence et de ses clients.
+- Proposer aux clients des services professionnels de communication digitale.
+- Disposer d'une plateforme web moderne pour présenter les services de l’agence.
+- Mettre en place un back-office ERP (Odoo) pour la gestion commerciale, RH et CRM.
+- Automatiser la communication client via site web, emails, réseaux sociaux.
+- Assurer la visibilité et le positionnement SEO de l’agence et de ses clients.
 
-🧩 3. Étude de l’existant
-# 🔍 Analyse Concurrentielle (Benchmark)
+---
+
+## 🧩 3. Étude de l’existant
+
+### 🔍 Analyse Concurrentielle (Benchmark)
 
 | Agence             | Points Forts                                         | Limites Identifiées                                                  |
 |--------------------|------------------------------------------------------|----------------------------------------------------------------------|
@@ -30,9 +34,9 @@ Assurer la visibilité et le positionnement SEO de l’agence et de ses clients.
 
 ---
 
-# 🚀 Stratégie pour Devenir Leader du Marché
+## 🚀 Stratégie pour Devenir Leader du Marché
 
-## 1. 💡 Proposition de Valeur Unique
+### 💡 Proposition de Valeur Unique
 
 **💼 "L’agence qui allie technologie, communication et gestion d’entreprise en un seul écosystème intelligent."**
 
@@ -46,7 +50,7 @@ Assurer la visibilité et le positionnement SEO de l’agence et de ses clients.
 
 ---
 
-## 2. 🛠 Fonctionnalités Uniques à Mettre en Avant
+### 🛠 Fonctionnalités Uniques à Mettre en Avant
 
 | Solution proposée                                | Concurrent en place ? | Avantage concurrentiel                          |
 |--------------------------------------------------|------------------------|------------------------------------------------|
@@ -59,7 +63,7 @@ Assurer la visibilité et le positionnement SEO de l’agence et de ses clients.
 
 ---
 
-## 3. 🧠 Positionnement Marketing
+### 🧠 Positionnement Marketing
 
 | Axe                  | Positionnement                                                                 |
 |----------------------|--------------------------------------------------------------------------------|
@@ -69,130 +73,116 @@ Assurer la visibilité et le positionnement SEO de l’agence et de ses clients.
 | **Canaux d’acquisition** | SEO fort, campagnes LinkedIn ciblées, partenariats ERP, salon tech        |
 | **Preuve sociale**   | Dashboard public de résultats client (stats anonymisées, témoignages)          |
 
+---
 
-🛠 4. Architecture Technique
-4.1 Front-end
-Framework : Next.js (React)
+## 🛠 4. Architecture Technique
 
-Fonctionnalités :
+### 4.1 Front-end
 
-Site vitrine de l’agence
+- **Framework :** Next.js (React)
 
-Pages services (Web, SEO, Social Media)
+**Fonctionnalités :**
 
-Formulaires de contact / devis
+- Site vitrine de l’agence
+- Pages services (Web, SEO, Social Media)
+- Formulaires de contact / devis
+- Blog SEO optimisé
+- Tableau de bord client (projets, factures, etc.)
 
-Blog SEO optimisé
+### 4.2 Back-end
 
-Tableau de bord client (projets, factures, etc.)
+- **Framework :** Django + Django Rest Framework
 
-4.2 Back-end
-Framework : Django + Django Rest Framework
+**Fonctionnalités :**
 
-Fonctionnalités :
+- API sécurisée pour la gestion des projets, utilisateurs, devis, factures
+- Authentification JWT
+- Intégration avec Odoo via API
 
-API sécurisée pour la gestion des projets, utilisateurs, devis, factures
+### 4.3 ERP
 
-Authentification JWT
+- **Outil :** Odoo Community / Enterprise
 
-Intégration avec Odoo via API
+**Modules intégrés :**
 
-4.3 ERP
-Outil : Odoo Community / Enterprise
+- CRM (clients, prospects, leads)
+- Ventes / Facturation
+- RH (suivi des collaborateurs, paie)
+- Gestion de projet (livrables, tâches)
+- Marketing automation (emailing, SMS)
 
-Modules intégrés :
+---
 
-CRM (clients, prospects, leads)
+## ⚙️ 5. Fonctionnalités Fonctionnelles
 
-Ventes / Facturation
+### Pour les clients :
 
-RH (suivi des collaborateurs, paie)
+- Création de compte et tableau de bord client
+- Suivi des devis, factures, projets en cours
+- Messagerie directe avec le gestionnaire de projet
+- Réception de rapports de performance SEO / social
 
-Gestion de projet (livrables, tâches)
+### Pour les administrateurs :
 
-Marketing automation (emailing, SMS)
+- Gestion des utilisateurs, rôles et permissions
+- Création / gestion de projets
+- Planification de campagnes réseaux sociaux
+- Génération de rapports (SEO, trafic, engagement)
+- Connexion automatique à Odoo (CRM, RH, facturation)
 
-⚙️ 5. Fonctionnalités Fonctionnelles
-Pour les clients
-Création de compte et tableau de bord client
+---
 
-Suivi des devis, factures, projets en cours
+## 🚫 6. Fonctionnalités Non Fonctionnelles
 
-Messagerie directe avec le gestionnaire de projet
+- **Sécurité :** Authentification JWT, HTTPS, protection CSRF
+- **Performance :** Temps de chargement < 3s, Next.js SSR optimisé
+- **Scalabilité :** Architecture modulaire et évolutive
+- **UX/UI :** Responsive design, accessibilité, navigation fluide
+- **SEO :** Sitemap XML, balises Open Graph, méta-structuration automatique
 
-Réception de rapports de performance SEO / social
+---
 
-Pour les administrateurs
-Gestion des utilisateurs, rôles et permissions
+## 🎨 7. Design & Charte Graphique
 
-Création / gestion de projets
+- Logo & identité visuelle professionnelle
+- Palette de couleurs moderne (à définir)
+- UI design avec Figma
+- Intégration d’un design system TailwindCSS
 
-Planification de campagnes réseaux sociaux
+---
 
-Génération de rapports (SEO, trafic, engagement)
+## 🧪 8. Tests & Validation
 
-Connexion automatique à Odoo (CRM, RH, facturation)
+- Tests unitaires (backend DRF)
+- Tests d’intégration (API, Next.js)
+- Tests utilisateurs (client / admin)
+- Audit SEO automatisé (Lighthouse, Semrush)
 
-🚫 6. Fonctionnalités Non Fonctionnelles
-Sécurité : Authentification JWT, HTTPS, protection CSRF
+---
 
-Performance : Temps de chargement < 3s, Next.js SSR optimisé
+## 📆 9. Planning Prévisionnel
 
-Scalabilité : Architecture modulaire et évolutive
+| Étape                        | Durée       |
+|-----------------------------|-------------|
+| Étude & cadrage             | 1 semaine   |
+| Maquettage (UI/UX)          | 1 semaine   |
+| Dev backend (DRF + Odoo API)| 2 semaines  |
+| Dev frontend (Next.js)      | 2 semaines  |
+| Intégration ERP (Odoo)      | 1 semaine   |
+| Tests & déploiement         | 1 semaine   |
+| Lancement & formation       | 1 semaine   |
 
-UX/UI : Responsive design, accessibilité, navigation fluide
+**Durée totale estimée : 8 semaines**
 
-SEO : Sitemap XML, balises Open Graph, méta-structuration automatique
+---
 
-🎨 7. Design & Charte Graphique
-Logo & identité visuelle professionnelle
 
-Palette de couleurs moderne (à définir)
 
-UI design avec Figma
+## 📎 10. Livrables Attendus
 
-Intégration d’un design system TailwindCSS
-
-🧪 8. Tests & Validation
-Tests unitaires (backend DRF)
-
-Tests d’intégration (API, Next.js)
-
-Tests utilisateurs (client / admin)
-
-Audit SEO automatisé (Lighthouse, Semrush)
-
-📆 9. Planning Prévisionnel
-Étape	Durée
-Étude & cadrage	1 semaine
-Maquettage (UI/UX)	1 semaine
-Dev backend (DRF + Odoo API)	2 semaines
-Dev frontend (Next.js)	2 semaines
-Intégration ERP (Odoo)	1 semaine
-Tests & déploiement	1 semaine
-Lancement & formation	1 semaine
-
-Durée totale estimée : 8 semaines
-
-💸 10. Budget Prévisionnel
-Poste	Estimation (TND)
-Développement Web (DRF + Next)	5000
-Intégration Odoo ERP	3000
-Design UI/UX	1000
-Hébergement & domaine (an)	500
-Marketing & communication (lancement)	1500
-Total estimé	11 000 TND
-
-📎 11. Livrables Attendus
-Site web responsive (Next.js)
-
-API RESTful documentée (Swagger)
-
-Intégration complète avec Odoo
-
-Interface d’administration et tableau de bord client
-
-Rapport de tests et de validation
-
-Documentation technique + guide utilisateur
-
+- Site web responsive (Next.js)
+- API RESTful documentée 
+- Intégration complète avec Odoo
+- Interface d’administration et tableau de bord client
+- Rapport de tests et de validation
+- Documentation technique + guide utilisateur
