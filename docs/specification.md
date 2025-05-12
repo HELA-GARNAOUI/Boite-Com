@@ -3,7 +3,6 @@
 ## 🧾 1. Présentation Générale
 
 **Boite Com**  
-**Commanditaire :** (Vous-même / Entreprise X)  
 **Type de projet :** Création d'une agence digitale spécialisée en création web, SEO, gestion de réseaux sociaux et intégration d'un ERP.
 
 ---
