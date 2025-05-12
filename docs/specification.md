@@ -112,7 +112,7 @@
 
 ---
 
-## ⚙️ 5. Fonctionnalités Fonctionnelles
+## ⚙️ 5. Besoin Fonctionnelles
 
 ### Pour les clients :
 
@@ -131,7 +131,7 @@
 
 ---
 
-## 🚫 6. Fonctionnalités Non Fonctionnelles
+## 🚫 6. Besoin Non Fonctionnelles
 
 - **Sécurité :** Authentification JWT, HTTPS, protection CSRF
 - **Performance :** Temps de chargement < 3s, Next.js SSR optimisé
