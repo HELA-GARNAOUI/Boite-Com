@@ -21,15 +21,23 @@
 
 ### 🔍 Analyse Concurrentielle (Benchmark)
 
-| Agence             | Points Forts                                         | Limites Identifiées                                                  |
-|--------------------|------------------------------------------------------|----------------------------------------------------------------------|
-| Interacti          | Expertise locale, approche client, branding         | Peu d’automatisation, pas de technologie avancée (AI/ERP)           |
-| THE ROAD           | Très bon design, branding, service personnalisé      | Pas de solution technique sur mesure (Django/Next), pas d’ERP       |
-| Web First Rank     | SEO fort, IA marketing, équipe formée                | Absence de CRM client, UX vieillissante, pas d’approche ERP         |
-| Digital Rise       | Vue internationale, SEO et contenu                  | Manque de différenciation technique ou ERP                          |
-| Tomorrow Media     | Innovante, focus média et technologie               | Pas orientée entreprise, manque de solutions B2B automatisées       |
-| WASM PRODCOM       | Audiovisuel & e-learning                             | Pas de développement web sur mesure ni ERP                          |
-| iTrend             | Bon suivi client, équipe engagée                     | Technologies classiques, peu de différenciation fonctionnelle       |
+# Benchmark des Agences de Communication Digitale
+
+| Agence                  | Services Principaux                                             | Points Forts                                                          | Points Faibles                                                                 | Lien du Site Web                                      |
+|------------------------|------------------------------------------------------------------|------------------------------------------------------------------------|--------------------------------------------------------------------------------|--------------------------------------------------------|
+| Interacti Marketing Agency | SEO, médias sociaux, contenu, email, branding               | Approche client-centrée, expertise locale, services variés             | Visibilité limitée, manque d'études de cas, localisation à Sfax              | https://www.interactiagency.com/           |
+| Digital Rise Solutions | SEO, contenu, médias sociaux, stratégie digitale               | Site professionnel, expertise SEO, perspective globale                 | Peu de contenu interactif, manque d'infos sur les tarifs                     | https://www.digital-rise-solutions.com/               |
+| Tomorrow Media Group   | Stratégie marketing, média, contenu, solutions data            | Innovation, insights consommateurs, data-driven                        | Absence de site public, manque de transparence                               | https://tomorrowworldmedia.wixsite.com/agency                                         |
+| THE ROAD               | Web design, webmarketing, communication, e-commerce            | Design élégant, approche 360°, collaboration client                    | Non multilingue, peu de métriques, blog absent                               | https://www.theroad.tn/                               |
+| TSB COMMERCIAL         | Stratégie digitale, pub, acquisition, marketing hôtelier       | Large portée (50+ plateformes), expertise hôtellerie, résultats        | Sans site, visibilité limitée, manque de portfolios                          | https://tsb.com.tn/en/entreprises                                        |
+| Web First Rank         | Communication digitale, SEO, IA, formations                    | Site technique, expertise IA, formations                               | Jargon technique, portée géographique limitée, peu de témoignages            | https://www.webfirstrank.com/                         |
+| Stellaris Consulting   | Marketing digital, stratégies data, design, analytics          | Solutions économiques, focus local, data-driven                        | Absence de site, visibilité réduite, manque de preuves                       | https://stellarisconsulting.com.au/                                        |
+| MHM Marketing Agency   | Solutions sur mesure, notoriété, optimisation en ligne         | Solutions personnalisées, focus croissance                             | Sans site, crédibilité floue, manque de détails                              | https://mhmarketing.solutions/                                         |
+| TAWA Digital Talents   | Marketing d'influence, campagnes IA, contenu                   | Expertise influenceurs, plateforme IA, niche innovante                 | Visibilité limitée, dépendance IA peut limiter personnalisation              | https://tawa.digital/         |
+| WASM PRODCOM           | Contenu, marketing digital, audiovisuel, e-learning            | Multidisciplinaire, e-learning unique, audiovisuel                     | Sans site, accès flou, portée limitée                                        | https://fakto.ch/company/1782277K                                        |
+| iTrend                 | Web dev, marketing digital, SEO, stratégie médias sociaux       | Site dynamique, partenariats durables, équipe passionnée               | Peu de contenu analytique, manque de cas clients, SEO à améliorer            | https://www.itrend.tn/                                |
+| Fieldwork Africa       | Recherche de marché, collecte de données, études quali/quanti | Site clair, réseau pan-africain, expertise recherche                   | Focus recherche, moins adapté aux campagnes digitales                        | https://www.fieldworkafrica.com/                      |
+
 
 ---
 
