@@ -1,0 +1,34 @@
+@startuml
+actor "Client" as client
+actor "Administrator" as admin
+actor "SEO Manager" as seo_manager
+actor "Social Media Manager" as social_media_manager
+actor "AI Optimizer" as ai_optimizer
+actor "Odoo ERP" as odoo_erp
+
+client --> (Create Project)
+client --> (Generate Quote)
+client --> (Manage Invoice)
+client --> (Generate SEO Report)
+client --> (Track Performance)
+
+admin --> (Manage Users)
+admin --> (Manage Projects)
+admin --> (Plan Campaigns)
+admin --> (Generate Reports)
+
+seo_manager --> (Generate SEO Report)
+seo_manager --> (Track Performance)
+
+social_media_manager --> (Manage Campaigns)
+social_media_manager --> (Track Performance)
+
+ai_optimizer --> (Automate Marketing Campaigns)
+
+odoo_erp --> (Connect to Odoo)
+
+(Create Project) --> (Generate Quote)
+(Generate Quote) --> (Manage Invoice)
+(Manage Invoice) --> (Generate SEO Report)
+
+@enduml

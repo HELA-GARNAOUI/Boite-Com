@@ -1,0 +1,92 @@
+@startuml
+package "Frontend (Next.js)" {
+  [Homepage]
+  [ServicesPage]
+  [ContactForm]
+  [ClientDashboard]
+}
+
+package "Backend (Django + DRF)" {
+  package "users" {
+    [User]
+    [Client]
+    [Admin]
+  }
+
+  package "projects" {
+    [Project]
+    [Task]
+    [Status]
+  }
+
+  package "crm" {
+    [Lead]
+    [Opportunity]
+    [Campaign]
+  }
+
+  package "invoices" {
+    [Invoice]
+    [Payment]
+  }
+
+  package "seo" {
+    [SEOReport]
+    [Keyword]
+  }
+
+  package "ai" {
+    [AIEngine]
+    [Segmentation]
+    [CampaignOptimizer]
+  }
+
+  package "api" {
+    [AuthAPI]
+    [ProjectAPI]
+    [InvoiceAPI]
+    [ReportAPI]
+  }
+}
+
+package "ERP (Odoo)" {
+  [OdooCRM]
+  [OdooHR]
+  [OdooBilling]
+  [OdooProject]
+}
+
+package "External Services" {
+  [EmailService]
+  [SocialMediaAPI]
+}
+
+' Relations
+[ClientDashboard] --> [User]
+[ContactForm] --> [Lead]
+[Homepage] --> [ServicesPage]
+[ServicesPage] --> [SEOReport]
+
+[Project] --> [Client]
+[Invoice] --> [Project]
+[Campaign] --> [Lead]
+[SEOReport] --> [Keyword]
+[CampaignOptimizer] --> [Campaign]
+[Segmentation] --> [Lead]
+
+[AuthAPI] --> [User]
+[ProjectAPI] --> [Project]
+[InvoiceAPI] --> [Invoice]
+[ReportAPI] --> [SEOReport]
+
+[AIEngine] --> [Segmentation]
+[AIEngine] --> [CampaignOptimizer]
+
+[Project] --> [OdooProject]
+[Invoice] --> [OdooBilling]
+[Client] --> [OdooCRM]
+
+[Campaign] --> [SocialMediaAPI]
+[SEOReport] --> [EmailService]
+
+@enduml

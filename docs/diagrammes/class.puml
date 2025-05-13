@@ -1,0 +1,81 @@
+@startuml
+class Client {
+  +createProject()
+  +generateQuote()
+  +manageInvoice()
+  +generateSEOReport()
+  +trackPerformance()
+}
+
+class Admin {
+  +manageUsers()
+  +manageProjects()
+  +planCampaigns()
+  +generateReports()
+}
+
+class SEOManager {
+  +generateSEOReport()
+  +trackPerformance()
+}
+
+class SocialMediaManager {
+  +manageCampaigns()
+  +trackPerformance()
+}
+
+class AIOptimizer {
+  +automateMarketingCampaigns()
+}
+
+class OdooERP {
+  +connectToOdoo()
+  +manageCRM()
+  +manageHR()
+  +manageFinance()
+  +manageProjects()
+}
+
+class Project {
+  -projectID: int
+  -clientID: int
+  -status: string
+  +create()
+  +updateStatus()
+}
+
+class Invoice {
+  -invoiceID: int
+  -clientID: int
+  -amount: float
+  +generate()
+  +updateStatus()
+}
+
+class SEOReport {
+  -reportID: int
+  -clientID: int
+  -keywords: List<string>
+  +generate()
+  +updateReport()
+}
+
+class Campaign {
+  -campaignID: int
+  -managerID: int
+  -status: string
+  +create()
+  +updateStatus()
+}
+
+Client "1" *-- "0..*" Project : owns
+Client "1" *-- "0..*" Invoice : generates
+Client "1" *-- "0..*" SEOReport : receives
+Admin "1" *-- "0..*" Campaign : manages
+Admin "1" *-- "0..*" Project : manages
+SEOManager "1" *-- "0..*" SEOReport : generates
+SocialMediaManager "1" *-- "0..*" Campaign : manages
+OdooERP "1" *-- "0..*" Client : manages
+OdooERP "1" *-- "0..*" Project : manages
+OdooERP "1" *-- "0..*" Invoice : manages
+@enduml
