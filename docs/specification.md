@@ -121,105 +121,105 @@
 
 ## ⚙️ 5. Besoin Fonctionnelles
 
-🤖 1. Analyse de Posture Digitale avec IA
-Audit automatique du site web du client (SEO, vitesse, sécurité)
+### 🤖 1. Analyse de Posture Digitale avec IA
+-Audit automatique du site web du client (SEO, vitesse, sécurité)
 
-Analyse de la présence sur les réseaux sociaux
+-Analyse de la présence sur les réseaux sociaux
 
-Recommandations stratégiques basées sur l’IA
+-Recommandations stratégiques basées sur l’IA
 
-Scoring digital (note de maturité numérique)
+-Scoring digital (note de maturité numérique)
 
-Génération automatique de plans d’action marketing personnalisés
+-Génération automatique de plans d’action marketing personnalisés
 
-📝 2. Blog & Actualités (Content Marketing)
-Articles optimisés SEO publiés régulièrement
+### 📝 2. Blog & Actualités (Content Marketing)
+-Articles optimisés SEO publiés régulièrement
 
-Catégories (SEO, Réseaux sociaux, Branding, etc.)
+-Catégories (SEO, Réseaux sociaux, Branding, etc.)
 
-Filtrage par sujet ou date
+-Filtrage par sujet ou date
 
-Système de commentaires
+-Système de commentaires
 
-Partage facile sur les réseaux sociaux
+-Partage facile sur les réseaux sociaux
 
-📰 3. Section News / Événements
-Communiqués sur les dernières tendances marketing
+### 📰 3. Section News / Événements
+-Communiqués sur les dernières tendances marketing
 
-Annonce des nouveaux services ou offres
+-Annonce des nouveaux services ou offres
 
-Intégration calendrier d’événements (webinaires, salons, lives)
+-Intégration calendrier d’événements (webinaires, salons, lives)
 
-💬 4. Chatbot Intelligent (IA)
-Accueil et assistance instantanée des visiteurs
+### 💬 4. Chatbot Intelligent (IA)
+-Accueil et assistance instantanée des visiteurs
 
-Réponses aux questions fréquentes (FAQ)
+-Réponses aux questions fréquentes (FAQ)
 
-Prise de rendez-vous automatisée
+-Prise de rendez-vous automatisée
 
-Redirection vers un agent humain si nécessaire
+-Redirection vers un agent humain si nécessaire
 
-Disponible 24h/24
+-Disponible 24h/24
 
-🧾 5. Présentation des Services
-Page dédiée pour chaque service :
+### 🧾 5. Présentation des Services
+-Page dédiée pour chaque service :
 
-Création de site web
+-Création de site web
 
-Gestion de réseaux sociaux
+-Gestion de réseaux sociaux
 
-Référencement naturel (SEO)
+-Référencement naturel (SEO)
 
 Publicité en ligne (SEA, social ads)
 
-Branding & identité visuelle
+-Branding & identité visuelle
 
-Intégration ERP (CRM, RH, gestion commerciale)
+-Intégration ERP (CRM, RH, gestion commerciale)
 
-Fiches détaillées, exemples concrets, tarifs estimatifs
+-Fiches détaillées, exemples concrets, tarifs estimatifs
 
-📞 6. Page de Contact Interactive
-Formulaire de contact intelligent (avec reconnaissance du besoin)
+### 📞 6. Page de Contact Interactive
+-Formulaire de contact intelligent (avec reconnaissance du besoin)
 
-Carte de localisation intégrée
+-Carte de localisation intégrée
 
-Intégration WhatsApp / Messenger
+-Intégration WhatsApp / Messenger
 
-Prise de rendez-vous en ligne
+-Prise de rendez-vous en ligne
 
-FAQ dynamique avec suggestions IA
+-FAQ dynamique avec suggestions IA
 
-👤 7. Espace Client Personnalisé (Dashboard)
-Connexion / inscription
+### 👤 7. Espace Client Personnalisé (Dashboard)
+-Connexion / inscription
 
-Suivi des projets, devis, factures
+-Suivi des projets, devis, factures
 
-Accès aux livrables
+-Accès aux livrables
 
-Statistiques personnalisées (SEO, social, campagnes)
+-Statistiques personnalisées (SEO, social, campagnes)
 
-📈 8. Outils de Diagnostic Marketing
-Score SEO en temps réel
+### 📈 8. Outils de Diagnostic Marketing
+-Score SEO en temps réel
 
-Audit des concurrents
+-Audit des concurrents
 
-Simulateur de budget pub (Google / Facebook)
+-Simulateur de budget pub (Google / Facebook)
 
-Générateur de mots-clés pour le contenu
+-Générateur de mots-clés pour le contenu
 
-🔔 9. Notifications & Automatisations
-Alertes de performance hebdomadaire
+### 🔔 9. Notifications & Automatisations
+-Alertes de performance hebdomadaire
 
-Rappels de rendez-vous
+-Rappels de rendez-vous
 
-Notification des publications planifiées
+-Notification des publications planifiées
 
-Emails automatisés (confirmation, récap, relance)
+-Emails automatisés (confirmation, récap, relance)
 
-🌍 10. Multilingue et Responsive
-Langues disponibles (français, anglais, arabe…)
+### 🌍 10. Multilingue et Responsive
+-Langues disponibles (français, anglais, arabe…)
 
-UX fluide sur mobile, tablette et desktop
+-UX fluide sur mobile, tablette et desktop
 ---
 
 ## 🚫 6. Besoin Non Fonctionnelles
