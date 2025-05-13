@@ -170,7 +170,7 @@
 
 -Référencement naturel (SEO)
 
-Publicité en ligne (SEA, social ads)
+-Publicité en ligne (SEA, social ads)
 
 -Branding & identité visuelle
 
