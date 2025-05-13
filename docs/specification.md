@@ -122,9 +122,9 @@
 ## ⚙️ 5. Besoin Fonctionnelles
 
 ### 🤖 1. Analyse de Posture Digitale avec IA
--Audit automatique du site web du client (SEO, vitesse, sécurité)
-
 -Analyse de la présence sur les réseaux sociaux
+
+-recommendation d'un pack services adequat 
 
 -Recommandations stratégiques basées sur l’IA
 
@@ -260,7 +260,7 @@
 
 - Logo & identité visuelle professionnelle
 - Palette de couleurs moderne (à définir)
-- UI design avec Figma
+- UI design
 - Intégration d’un design system TailwindCSS
 
 ---
