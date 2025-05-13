@@ -207,20 +207,11 @@
 
 -Générateur de mots-clés pour le contenu
 
-### 🔔 9. Notifications & Automatisations
--Alertes de performance hebdomadaire
-
--Rappels de rendez-vous
-
--Notification des publications planifiées
-
--Emails automatisés (confirmation, récap, relance)
-
-### 🌍 10. Multilingue et Responsive
+### 🌍 9. Multilingue et Responsive
 -Langues disponibles (français, anglais, arabe…)
 
 -UX fluide sur mobile, tablette et desktop
-### 11. Demande de Devis en Ligne
+### 10. Demande de Devis en Ligne
 
 -Choix des services (checklist)
 
