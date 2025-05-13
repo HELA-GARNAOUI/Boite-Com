@@ -220,6 +220,39 @@
 -Langues disponibles (français, anglais, arabe…)
 
 -UX fluide sur mobile, tablette et desktop
+### 11. Demande de Devis en Ligne
+
+-Choix des services (checklist)
+
+-Budget estimé
+
+-Délai souhaité
+
+-Description du besoin
+
+-Possibilité d’ajouter des fichiers (brief, logo, inspiration…)
+
+-Estimation automatique (optionnel) selon les choix
+
+-Génération d’un devis PDF ou affichage d’un devis pré-rempli
+
+-Envoi automatique au back-office + email client
+
+-Intégration avec CRM (ex : Odoo)
+
+-👤 Côté client :
+-Accessible depuis la page d’accueil ou services
+
+-Historique des demandes depuis l’espace personnel
+
+-Suivi de statut : en attente, en cours de traitement, validé
+
+-🧑‍💼 Côté administrateur :
+-Interface pour consulter, éditer, approuver ou refuser
+
+-Possibilité de convertir la demande en projet
+
+-Notifications internes (mail ou via dashboard)
 ---
 
 ## 🚫 6. Besoin Non Fonctionnelles
