@@ -121,21 +121,105 @@
 
 ## ⚙️ 5. Besoin Fonctionnelles
 
-### Pour les clients :
+🤖 1. Analyse de Posture Digitale avec IA
+Audit automatique du site web du client (SEO, vitesse, sécurité)
 
-- Création de compte et tableau de bord client
-- Suivi des devis, factures, projets en cours
-- Messagerie directe avec le gestionnaire de projet
-- Réception de rapports de performance SEO / social
+Analyse de la présence sur les réseaux sociaux
 
-### Pour les administrateurs :
+Recommandations stratégiques basées sur l’IA
 
-- Gestion des utilisateurs, rôles et permissions
-- Création / gestion de projets
-- Planification de campagnes réseaux sociaux
-- Génération de rapports (SEO, trafic, engagement)
-- Connexion automatique à Odoo (CRM, RH, facturation)
+Scoring digital (note de maturité numérique)
 
+Génération automatique de plans d’action marketing personnalisés
+
+📝 2. Blog & Actualités (Content Marketing)
+Articles optimisés SEO publiés régulièrement
+
+Catégories (SEO, Réseaux sociaux, Branding, etc.)
+
+Filtrage par sujet ou date
+
+Système de commentaires
+
+Partage facile sur les réseaux sociaux
+
+📰 3. Section News / Événements
+Communiqués sur les dernières tendances marketing
+
+Annonce des nouveaux services ou offres
+
+Intégration calendrier d’événements (webinaires, salons, lives)
+
+💬 4. Chatbot Intelligent (IA)
+Accueil et assistance instantanée des visiteurs
+
+Réponses aux questions fréquentes (FAQ)
+
+Prise de rendez-vous automatisée
+
+Redirection vers un agent humain si nécessaire
+
+Disponible 24h/24
+
+🧾 5. Présentation des Services
+Page dédiée pour chaque service :
+
+Création de site web
+
+Gestion de réseaux sociaux
+
+Référencement naturel (SEO)
+
+Publicité en ligne (SEA, social ads)
+
+Branding & identité visuelle
+
+Intégration ERP (CRM, RH, gestion commerciale)
+
+Fiches détaillées, exemples concrets, tarifs estimatifs
+
+📞 6. Page de Contact Interactive
+Formulaire de contact intelligent (avec reconnaissance du besoin)
+
+Carte de localisation intégrée
+
+Intégration WhatsApp / Messenger
+
+Prise de rendez-vous en ligne
+
+FAQ dynamique avec suggestions IA
+
+👤 7. Espace Client Personnalisé (Dashboard)
+Connexion / inscription
+
+Suivi des projets, devis, factures
+
+Accès aux livrables
+
+Statistiques personnalisées (SEO, social, campagnes)
+
+📈 8. Outils de Diagnostic Marketing
+Score SEO en temps réel
+
+Audit des concurrents
+
+Simulateur de budget pub (Google / Facebook)
+
+Générateur de mots-clés pour le contenu
+
+🔔 9. Notifications & Automatisations
+Alertes de performance hebdomadaire
+
+Rappels de rendez-vous
+
+Notification des publications planifiées
+
+Emails automatisés (confirmation, récap, relance)
+
+🌍 10. Multilingue et Responsive
+Langues disponibles (français, anglais, arabe…)
+
+UX fluide sur mobile, tablette et desktop
 ---
 
 ## 🚫 6. Besoin Non Fonctionnelles
