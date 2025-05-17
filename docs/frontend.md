@@ -1,256 +1,125 @@
 # Frontend Specification
 
 ## Technology Stack
-- **Framework:** Next.js 15
+- **Framework:** Next.js 14
 - **Styling:** TailwindCSS
-- **State Management:** React Context + SWR for data fetching
-- **Authentication:** NextAuth.js with Odoo integration
-- **Form Handling:** React Hook Form + Zod validation
-- **UI Components:** Shadcn/ui
+- **State Management:** React Context + SWR
+- **Form Handling:** React Hook Form
 - **Internationalization:** next-intl
-- **Odoo Integration:** XML-RPC/JSON-RPC client
+- **SEO:** Next.js built-in SEO features
 
 ## Pages Structure
 
-### 1. Public Pages
+### 1. Home Page (`/`)
+- Hero Section with agency value proposition
+- Services Overview Cards
+- Featured Projects Carousel
+- Client Testimonials
+- Latest Blog Posts Preview
+- Contact CTA Section
 
-#### Home Page (`/`)
-- Hero section with value proposition
-- Services overview
-- Featured case studies
-- Client testimonials
-- Latest blog posts
-- Contact CTA
+### 2. Services Pages
+#### Web Development (`/services/web-development`)
+- Service Description
+- Technology Stack Showcase
+- Process Steps
+- Pricing Plans
+- Portfolio Examples
+- FAQ Section
 
-#### Services Pages
-- Web Development (`/services/web-development`)
-- SEO Services (`/services/seo`)
-- Social Media Management (`/services/social-media`)
-- ERP Integration (`/services/erp-integration`)
-- Branding (`/services/branding`)
+#### SEO Services (`/services/seo`)
+- SEO Service Packages
+- Process & Methodology
+- Case Studies
+- ROI Calculator
+- FAQ Section
 
-#### Blog (`/blog`)
-- Article listing with filters
-- Category pages
-- Search functionality
-- Related articles
-- Social sharing
+#### Social Media Management (`/services/social-media`)
+- Service Packages
+- Platform Coverage
+- Content Strategy
+- Analytics Dashboard Preview
+- Success Stories
 
-#### Contact (`/contact`)
-- Contact form
-- Interactive map
-- WhatsApp integration
-- Live chat widget
-- FAQ section
+### 3. Blog Section (`/blog`)
+- Blog Post Grid
+- Category Filter
+- Search Functionality
+- Popular Posts Sidebar
+- Newsletter Subscription
 
-#### About (`/about`)
-- Company story
-- Team members
-- Mission & values
-- Certifications
-- Partners
+### 4. Client Dashboard (`/dashboard`)
+- Project Status Overview
+- Analytics Dashboard
+- Invoice History
+- Communication Center
+- Support Ticket System
 
-### 2. Client Dashboard (`/dashboard`)
-
-#### Overview (`/dashboard`)
-- Project status summary (Odoo + Custom)
-- Recent activities
-- Quick actions
-- Performance metrics
-- Notifications
-
-#### Projects (`/dashboard/projects`)
-- Project list (Odoo)
-- Project details
-- Timeline view
-- File management
-- Team collaboration
-
-#### Analytics (`/dashboard/analytics`)
-- SEO performance (Custom API)
-- Social media metrics (Custom API)
-- Website traffic
-- Custom reports
-- Data visualization
-
-#### Invoices (`/dashboard/invoices`)
-- Invoice list (Odoo)
-- Payment history
-- Download PDF
-- Payment processing
-- Tax documents
-
-#### Profile (`/dashboard/profile`)
-- Personal information
-- Company details
-- Preferences
-- Security settings
-- API keys
-
-### 3. Odoo Integration Pages
-
-#### CRM Dashboard (`/dashboard/crm`)
-- Lead management
-- Opportunity tracking
-- Pipeline view
-- Activity calendar
-- Sales forecasts
-
-#### HR Portal (`/dashboard/hr`)
-- Employee directory
-- Leave management
-- Attendance tracking
-- Document management
-- Payroll information
-
-#### Sales Portal (`/dashboard/sales`)
-- Quotation management
-- Order processing
-- Customer management
-- Sales analytics
-- Commission tracking
+### 5. Contact Page (`/contact`)
+- Contact Form
+- Office Location Map
+- Team Contact Information
+- FAQ Section
+- Live Chat Integration
 
 ## Components Library
 
 ### Common Components
-- Button
-- Input
-- Select
-- Modal
-- Card
-- Table
-- Form
-- Alert
-- Toast
-- Loading
-- Avatar
-- Badge
-- Tabs
-- Accordion
-- Dropdown
-
-### Layout Components
-- Header
-- Footer
-- Sidebar
-- Navigation
-- Breadcrumb
-- Container
-- Grid
-- Section
+- `Button` - Primary, Secondary, Tertiary variants
+- `Card` - Service, Project, Blog Post cards
+- `Input` - Text, Email, Password, Select
+- `Modal` - Confirmation, Information, Form
+- `Navigation` - Header, Footer, Sidebar
+- `Loading` - Spinner, Skeleton
+- `Alert` - Success, Error, Warning, Info
 
 ### Feature Components
-- ProjectCard
-- ServiceCard
-- TestimonialCard
-- BlogCard
-- TeamMemberCard
-- AnalyticsChart
-- Timeline
-- FileUploader
-- RichTextEditor
-- Calendar
-- ChatWidget
-
-### Odoo Integration Components
-- OdooDataTable
-- OdooForm
-- OdooKanban
-- OdooCalendar
-- OdooChart
-- OdooSearch
-- OdooFilter
-- OdooPagination
+- `ServiceCard` - Service presentation
+- `ProjectCard` - Portfolio item
+- `TestimonialCard` - Client feedback
+- `BlogCard` - Article preview
+- `PricingCard` - Service packages
+- `ContactForm` - Lead generation
+- `AnalyticsChart` - Data visualization
+- `ChatWidget` - Customer support
 
 ## State Management
-
-### Global State
-- Authentication state (NextAuth + Odoo)
-- User preferences
-- Theme settings
-- Language settings
-- Notification state
-- Odoo session state
-
-### Local State
-- Form states
-- UI states
-- Component-specific data
-- Temporary data
-- Odoo data cache
-
-## API Integration
-
-### Data Fetching
-- SWR for data fetching
-- React Query for complex queries
-- Axios for HTTP requests
-- WebSocket for real-time updates
-- Odoo XML-RPC/JSON-RPC client
-
-### Authentication
-- JWT token management
-- Odoo session management
-- Role-based access control
-- Session management
-- OAuth integration
+- Global state for user authentication
+- Local state for forms and UI interactions
+- Server state for data fetching (SWR)
+- Cache management for API responses
 
 ## Performance Optimization
+- Image optimization with next/image
+- Code splitting and lazy loading
+- Static page generation where possible
+- API route caching
+- Service worker for offline support
 
-### Techniques
-- Image optimization
-- Code splitting
-- Lazy loading
-- Caching strategies
-- Bundle optimization
-- Odoo data caching
-
-### Metrics
-- First Contentful Paint < 1.5s
-- Time to Interactive < 3.5s
-- Lighthouse score > 90
-- Core Web Vitals optimization
-- Odoo response time < 1s
+## SEO Implementation
+- Meta tags management
+- Structured data
+- Sitemap generation
+- Robots.txt configuration
+- Open Graph tags
+- Twitter Cards
 
 ## Accessibility
-
-### Standards
-- WCAG 2.1 compliance
 - ARIA labels
 - Keyboard navigation
-- Screen reader support
-- Color contrast
+- Color contrast compliance
+- Screen reader optimization
+- Focus management
 
 ## Internationalization
-
-### Features
-- Multi-language support
+- French (default)
+- English
+- Arabic
+- Language switcher
 - RTL support
-- Date/time formatting
-- Number formatting
-- Currency handling
-- Odoo language sync
 
 ## Testing Strategy
-
-### Types
-- Unit tests (Jest)
-- Integration tests (React Testing Library)
-- E2E tests (Cypress)
-- Visual regression tests
-- Performance tests
-- Odoo integration tests
-
-## Deployment
-
-### Environments
-- Development
-- Staging
-- Production
-
-### CI/CD
-- GitHub Actions
-- Automated testing
-- Build optimization
-- Deployment automation
-- Odoo sync verification
+- Unit tests with Jest
+- Component tests with React Testing Library
+- E2E tests with Cypress
+- Performance testing with Lighthouse
