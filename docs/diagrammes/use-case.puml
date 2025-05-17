@@ -1,34 +1,30 @@
 @startuml
+actor "Visitor" as visitor
 actor "Client" as client
-actor "Administrator" as admin
-actor "SEO Manager" as seo_manager
-actor "Social Media Manager" as social_media_manager
-actor "AI Optimizer" as ai_optimizer
-actor "Odoo ERP" as odoo_erp
 
-client --> (Create Project)
-client --> (Generate Quote)
-client --> (Manage Invoice)
-client --> (Generate SEO Report)
-client --> (Track Performance)
+visitor <|-- client
 
-admin --> (Manage Users)
-admin --> (Manage Projects)
-admin --> (Plan Campaigns)
-admin --> (Generate Reports)
+' Website Navigation & Content Access
+visitor --> (Browse Website)
+(Browse Website) <.. (View Services)
+(Browse Website) <.. (View Portfolio and Case Studies)
+(Browse Website) <.. (Read and Filter Blog)
 
-seo_manager --> (Generate SEO Report)
-seo_manager --> (Track Performance)
+' Interactive Features & Analysis
+visitor --> (Use AI Chatbot)
+visitor --> (Analyze Digital Posture)
+visitor --> (Get Service Recommendations)
 
-social_media_manager --> (Manage Campaigns)
-social_media_manager --> (Track Performance)
 
-ai_optimizer --> (Automate Marketing Campaigns)
+' Contact & Communication
+visitor --> (Use Contact Form)
+visitor --> (Access Multilingual Content)
 
-odoo_erp --> (Connect to Odoo)
+' Client Portal Access
+visitor --> (Register and Login)
 
-(Create Project) --> (Generate Quote)
-(Generate Quote) --> (Manage Invoice)
-(Manage Invoice) --> (Generate SEO Report)
+client --> (Access Client Dashboard)
+client --> (Manage Projects and Documents)
+client --> (View Performance Metrics)
 
 @enduml
