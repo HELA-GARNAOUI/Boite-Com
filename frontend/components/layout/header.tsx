@@ -108,7 +108,7 @@ export default function Header() {
                       <Link href="/contact">{t("cta.getQuote")}</Link>
                     </Button>
                     <Button variant="outline" asChild>
-                      <Link href="/auth/login">{t("auth.login")}</Link>
+                      <Link href="/client/login">{t("auth.login")}</Link>
                     </Button>
                   </>
                 )}
@@ -182,7 +182,7 @@ export default function Header() {
           ) : (
             <>
               <Button variant="outline" asChild>
-                <Link href="/auth/login">{t("auth.login")}</Link>
+                <Link href="/client/login">{t("auth.login")}</Link>
               </Button>
               <Button asChild>
                 <Link href="/contact">{t("cta.getQuote")}</Link>

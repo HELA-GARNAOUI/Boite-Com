@@ -1,16 +1,19 @@
 import uuid
 from django.db import models
+from django.conf import settings
+from django.utils import timezone
 from users.models import ClientProfile
 
 
 class DigitalPostureAnalysis(models.Model):
     """Model for storing digital posture analysis data"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE, related_name='digital_posture_analyses')
-    score = models.FloatField()
-    analysis_date = models.DateTimeField(auto_now_add=True)
+    client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE, related_name='analyses')
+    analysis_date = models.DateTimeField(default=timezone.now)
+    score = models.FloatField(default=0.0)  # Digital maturity score (0-100)
+    recommendations = models.JSONField(default=list)
     metrics = models.JSONField(default=dict)
-    report_file = models.FileField(upload_to='reports/', null=True, blank=True)
+    notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -20,7 +23,14 @@ class DigitalPostureAnalysis(models.Model):
         ordering = ['-analysis_date']
     
     def __str__(self):
-        return f"Analysis for {self.client.company_name} - {self.analysis_date.strftime('%Y-%m-%d')}"
+        return f"{self.client.company_name} - {self.analysis_date.strftime('%Y-%m-%d')}"
+
+    def save(self, *args, **kwargs):
+        # Update client's digital maturity score when analysis is saved
+        if self.client:
+            self.client.digital_maturity_score = self.score
+            self.client.save()
+        super().save(*args, **kwargs)
 
 
 class Recommendation(models.Model):
@@ -42,7 +52,7 @@ class Recommendation(models.Model):
     )
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    analysis = models.ForeignKey(DigitalPostureAnalysis, on_delete=models.CASCADE, related_name='recommendations')
+    analysis = models.ForeignKey(DigitalPostureAnalysis, on_delete=models.CASCADE, related_name='recommendation_set')
     title = models.CharField(max_length=255)
     description = models.TextField()
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)

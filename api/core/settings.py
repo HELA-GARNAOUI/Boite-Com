@@ -157,7 +157,7 @@ REST_FRAMEWORK = {
         'anon': '100/day',
         'user': '1000/day'
     },
-    'EXCEPTION_HANDLER': 'core.utils.custom_exception_handler'
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
 }
 
 # JWT settings

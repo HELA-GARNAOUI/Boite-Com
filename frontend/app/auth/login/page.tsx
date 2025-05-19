@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -26,11 +26,41 @@ interface LoginResponse {
 export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const accessToken = Cookies.get('access_token');
+      if (!accessToken) {
+        router.replace('/client/login');
+        return;
+      }
+      try {
+        await api.get('/api/v1/auth/verify/');
+        setAuthenticated(true);
+      } catch {
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        router.replace('/client/login');
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkAuth();
+  }, [router]);
+
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
+
+  if (!authenticated) {
+    return null; // Or a spinner, but user will be redirected
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

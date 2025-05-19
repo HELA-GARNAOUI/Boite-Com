@@ -18,7 +18,7 @@ export function LogoutButton() {
     toast.success('Logged out successfully');
 
     // Redirect to login page
-    router.push('/auth/login');
+    router.push('/client/login');
   };
 
   return (

@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 from .views import (
     RegisterAPIView, 
-    OdooLoginView, 
+    LoginView, 
     LogoutAPIView, 
     UserProfileAPIView
 )
@@ -11,7 +11,7 @@ app_name = 'users'
 
 urlpatterns = [
     path('register/', RegisterAPIView.as_view(), name='register'),
-    path('token/', OdooLoginView.as_view(), name='login'),
+    path('token/', LoginView.as_view(), name='login'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('logout/', LogoutAPIView.as_view(), name='logout'),
     path('profile/', UserProfileAPIView.as_view(), name='profile'),

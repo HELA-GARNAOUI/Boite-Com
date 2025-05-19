@@ -71,7 +71,7 @@ class RegisterAPIView(generics.CreateAPIView):
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class OdooLoginView(APIView):
+class LoginView(APIView):
     """
     API endpoint for login with email and password
     """

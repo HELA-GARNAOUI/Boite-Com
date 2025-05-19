@@ -2,13 +2,26 @@ import { Metadata } from "next"
 import { ArrowRight, Code, Target, Users, Globe, Zap, Shield, Sparkles, Rocket, Lightbulb, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: "DigiFlow Agency - Digital Innovation & Growth",
   description: "Transform your business with DigiFlow Agency. We create innovative digital solutions that drive growth and success.",
 }
 
-export default function HomePage() {
+async function getPublicProducts() {
+  try {
+    // TODO: Implement product fetching from our own API
+    return [];
+  } catch (error) {
+    console.error('Error fetching public products:', error);
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const products = await getPublicProducts();
+
   return (
     <div className="relative min-h-screen">
       {/* Background Elements */}
@@ -36,10 +49,10 @@ export default function HomePage() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                href="/contact"
+                href="/client"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-primary/40 hover:scale-105"
               >
-                Start Your Project
+                Access Client Area
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
@@ -229,15 +242,15 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
             <div className="relative px-8 py-16 md:px-16 md:py-24">
               <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Digital Presence?</h2>
+                <h2 className="text-4xl font-bold mb-6">Ready to Access Your Client Area?</h2>
                 <p className="text-xl text-muted-foreground mb-8">
-                  Let's work together to create something extraordinary for your business.
+                  Log in to manage your account, track orders, and access exclusive content.
                 </p>
                 <Link
-                  href="/contact"
+                  href="/client"
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:shadow-primary/40 hover:scale-105"
                 >
-                  Start Your Project
+                  Go to Client Area
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
@@ -245,6 +258,48 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* Featured Products Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-8">Featured Products</h2>
+          <Suspense fallback={<div>Loading products...</div>}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {products.map((product: any) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  {product.image_small && (
+                    <img
+                      src={`data:image/png;base64,${product.image_small}`}
+                      alt={product.name}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {product.description_sale}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-blue-600 font-bold">
+                        ${product.list_price}
+                      </span>
+                      <Link
+                        href="/client"
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                      >
+                        View in Client Area
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Suspense>
+        </div>
+      </section>
     </div>
   )
 }

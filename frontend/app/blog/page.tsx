@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -11,22 +11,50 @@ import Link from "next/link"
 import { Calendar, Clock, Search, User } from "lucide-react"
 import { NewsletterForm } from '@/components/newsletter/newsletter-form'
 
+// Stable initial blog posts data
+const initialBlogPosts = [
+  {
+    id: 1,
+    title: "Comment améliorer votre présence en ligne",
+    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    date: "15/03/2024",
+    author: "Jean Dupont",
+    readTime: "5 min",
+    category: "Marketing Digital",
+    image: "/placeholder.svg?height=300&width=500&text=Article+1",
+  },
+  {
+    id: 2,
+    title: "Les tendances SEO en 2024",
+    excerpt: "Découvrez les dernières tendances en matière de référencement et comment les appliquer à votre site web.",
+    date: "10/03/2024",
+    author: "Marie Martin",
+    readTime: "7 min",
+    category: "SEO",
+    image: "/placeholder.svg?height=300&width=500&text=Article+2",
+  },
+  {
+    id: 3,
+    title: "Optimiser l'expérience utilisateur",
+    excerpt: "Apprenez à créer une expérience utilisateur optimale pour vos visiteurs et clients.",
+    date: "05/03/2024",
+    author: "Pierre Durand",
+    readTime: "6 min",
+    category: "Web Design",
+    image: "/placeholder.svg?height=300&width=500&text=Article+3",
+  },
+  // Add more stable blog posts as needed
+]
+
 export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("all")
+  const [blogPosts, setBlogPosts] = useState(initialBlogPosts)
+  const [isClient, setIsClient] = useState(false)
 
-  // Mock blog posts data
-  const blogPosts = Array.from({ length: 9 }, (_, i) => ({
-    id: i + 1,
-    title: `Comment améliorer votre ${i % 3 === 0 ? "présence en ligne" : i % 3 === 1 ? "stratégie SEO" : "expérience utilisateur"}`,
-    excerpt:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    date: `${Math.floor(Math.random() * 28) + 1}/0${Math.floor(Math.random() * 4) + 1}/2023`,
-    author: "Jean Dupont",
-    readTime: `${Math.floor(Math.random() * 10) + 3} min`,
-    category: i % 3 === 0 ? "Marketing Digital" : i % 3 === 1 ? "SEO" : "Web Design",
-    image: `/placeholder.svg?height=300&width=500&text=Article+${i + 1}`,
-  }))
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Filter posts based on search query and active tab
   const filteredPosts = blogPosts.filter((post) => {
@@ -43,6 +71,11 @@ export default function BlogPage() {
 
   // Mock popular posts
   const popularPosts = blogPosts.slice(0, 4)
+
+  // Don't render anything until we're on the client
+  if (!isClient) {
+    return null
+  }
 
   return (
     <div className="container mx-auto py-12 space-y-12">

@@ -132,7 +132,7 @@ export default function ClientHeader() {
                       <Link href="/contact">Prendre un devis</Link>
                     </Button>
                     <Button variant="outline" asChild>
-                      <Link href="/auth/login">Login</Link>
+                      <Link href="/client/login">Login</Link>
                     </Button>
                   </>
                 )}
@@ -192,7 +192,7 @@ export default function ClientHeader() {
           ) : (
             <>
               <Button variant="outline" asChild>
-                <Link href="/auth/login">Login</Link>
+                <Link href="/client/login">Login</Link>
               </Button>
               <Button asChild>
                 <Link href="/contact">Prendre un devis</Link>

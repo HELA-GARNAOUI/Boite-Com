@@ -33,7 +33,7 @@ export default function DashboardLayout({
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
-        router.push('/auth/login');
+        router.push('/client/login');
       } finally {
         setLoading(false);
       }
