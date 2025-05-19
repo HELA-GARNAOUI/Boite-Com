@@ -1,12 +1,28 @@
-from rest_framework.views import APIView
+from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
+from .models import Service
+from .serializers import ServiceSerializer
 
-class ServiceListView(APIView):
-    def get(self, request):
-        # Placeholder service data
-        data = [
-            {"id": 1, "name": "Service 1"},
-            {"id": 2, "name": "Service 2"}
-        ]
-        return Response(data, status=status.HTTP_200_OK) 
+class ServiceViewSet(viewsets.ModelViewSet):
+    serializer_class = ServiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Service.objects.filter(created_by=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    @action(detail=True, methods=['patch'])
+    def update_status(self, request, pk=None):
+        service = self.get_object()
+        new_status = request.data.get('status')
+        
+        if new_status not in dict(Service.STATUS_CHOICES):
+            return Response({'error': 'Invalid status'}, status=400)
+            
+        service.status = new_status
+        service.save()
+        
+        return Response(self.get_serializer(service).data) 

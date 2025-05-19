@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react"
+import { NewsletterForm } from '@/components/newsletter/newsletter-form'
 
 export default function Footer() {
   return (
@@ -101,10 +102,7 @@ export default function Footer() {
             <p className="text-sm text-muted-foreground">
               Abonnez-vous pour recevoir nos dernières actualités et conseils.
             </p>
-            <div className="flex space-x-2">
-              <Input placeholder="Votre email" type="email" className="max-w-[220px]" />
-              <Button>S'abonner</Button>
-            </div>
+            <NewsletterForm />
           </div>
         </div>
 

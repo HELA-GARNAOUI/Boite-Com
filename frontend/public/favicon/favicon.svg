@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond circulaire -->
+  <circle cx="16" cy="16" r="16" fill="#2563eb"/>
+  
+  <!-- Texte "D" stylisé -->
+  <text x="8" y="22" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">
+    D
+  </text>
+  
+  <!-- Icône de flux -->
+  <path d="M20 16 L24 12 L24 20 Z" fill="white"/>
+  <path d="M16 16 L20 12 L20 20 Z" fill="white"/>
+</svg> 

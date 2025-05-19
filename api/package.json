@@ -11,5 +11,8 @@
     "test": "python manage.py test",
     "lint": "flake8 .",
     "format": "black ."
+  },
+  "dependencies": {
+    "react-hot-toast": "^2.5.2"
   }
 }

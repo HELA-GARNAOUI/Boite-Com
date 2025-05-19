@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond du logo -->
+  <rect x="0" y="0" width="200" height="50" fill="none"/>
+  
+  <!-- Texte "Digi" -->
+  <text x="10" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2563eb">
+    Digi
+  </text>
+  
+  <!-- Texte "Flow" -->
+  <text x="65" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e40af">
+    Flow
+  </text>
+  
+  <!-- Icône de flux -->
+  <path d="M160 25 L180 15 L180 35 Z" fill="#2563eb"/>
+  <path d="M140 25 L160 15 L160 35 Z" fill="#1e40af"/>
+  <path d="M120 25 L140 15 L140 35 Z" fill="#3b82f6"/>
+</svg> 

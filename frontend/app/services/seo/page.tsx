@@ -1,11 +1,77 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import Image from "next/image"
 import Link from "next/link"
 import { BarChart, Check, LineChart, Search, TrendingUp } from "lucide-react"
+import { CheckoutModal } from "@/components/checkout/checkout-modal"
+import { toast } from "react-hot-toast"
 
 export default function SEOPage() {
+  const [selectedPlan, setSelectedPlan] = useState<{
+    title: string
+    price: string
+    description: string
+    features: string[]
+  } | null>(null)
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+  const [roiData, setRoiData] = useState({
+    traffic: "",
+    conversion: "",
+    value: "",
+  })
+  const [roiResult, setRoiResult] = useState<{
+    currentRevenue: number
+    projectedRevenue: number
+    potentialIncrease: number
+    roi: number
+  } | null>(null)
+
+  const handlePlanSelect = (plan: any) => {
+    setSelectedPlan(plan)
+    setIsCheckoutOpen(true)
+  }
+
+  const calculateROI = () => {
+    const traffic = parseFloat(roiData.traffic)
+    const conversion = parseFloat(roiData.conversion) / 100
+    const value = parseFloat(roiData.value)
+
+    if (isNaN(traffic) || isNaN(conversion) || isNaN(value)) {
+      toast.error("Veuillez remplir tous les champs avec des valeurs valides")
+      return
+    }
+
+    // Calculate current revenue
+    const currentRevenue = traffic * conversion * value
+
+    // Projected improvements (conservative estimates)
+    const projectedTrafficIncrease = 1.5 // 50% increase
+    const projectedConversionIncrease = 1.2 // 20% increase
+
+    // Calculate projected revenue
+    const projectedRevenue = (traffic * projectedTrafficIncrease) * (conversion * projectedConversionIncrease) * value
+
+    // Calculate potential increase and ROI
+    const potentialIncrease = projectedRevenue - currentRevenue
+    const roi = (potentialIncrease / 1200) * 100 // Assuming average monthly SEO cost of 1200€
+
+    setRoiResult({
+      currentRevenue,
+      projectedRevenue,
+      potentialIncrease,
+      roi,
+    })
+  }
+
+  const handleRoiInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target
+    setRoiData(prev => ({ ...prev, [id]: value }))
+  }
+
   return (
     <div className="container mx-auto py-12 space-y-16">
       {/* Hero Section */}
@@ -96,7 +162,11 @@ export default function SEOPage() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" variant={plan.highlighted ? "default" : "outline"}>
+                <Button 
+                  className="w-full" 
+                  variant={plan.highlighted ? "default" : "outline"}
+                  onClick={() => handlePlanSelect(plan)}
+                >
                   Choisir ce forfait
                 </Button>
               </CardFooter>
@@ -109,97 +179,40 @@ export default function SEOPage() {
       <section className="space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold">Notre Méthodologie SEO</h2>
-          <p className="text-muted-foreground mt-2">Une approche systématique pour des résultats durables</p>
+          <p className="text-muted-foreground mt-2">Une approche structurée pour des résultats durables</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-4 gap-6">
           {[
             {
-              title: "Audit & Analyse",
-              description:
-                "Nous analysons votre site et celui de vos concurrents pour identifier les opportunités d'amélioration.",
-              icon: <Search className="h-10 w-10 text-primary" />,
+              icon: <Search className="h-8 w-8" />,
+              title: "Audit",
+              description: "Analyse approfondie de votre site et de votre positionnement actuel",
             },
             {
+              icon: <BarChart className="h-8 w-8" />,
               title: "Stratégie",
-              description: "Nous élaborons une stratégie SEO personnalisée basée sur vos objectifs commerciaux.",
-              icon: <LineChart className="h-10 w-10 text-primary" />,
+              description: "Développement d'une stratégie SEO personnalisée et d'un plan d'action",
             },
             {
+              icon: <TrendingUp className="h-8 w-8" />,
               title: "Optimisation",
-              description: "Nous optimisons votre site pour les moteurs de recherche et les utilisateurs.",
-              icon: <TrendingUp className="h-10 w-10 text-primary" />,
+              description: "Mise en œuvre des optimisations techniques et de contenu",
             },
             {
-              title: "Suivi & Ajustement",
-              description: "Nous suivons les performances et ajustons la stratégie pour maximiser les résultats.",
-              icon: <BarChart className="h-10 w-10 text-primary" />,
+              icon: <LineChart className="h-8 w-8" />,
+              title: "Suivi",
+              description: "Surveillance continue des performances et ajustements stratégiques",
             },
           ].map((step, index) => (
             <Card key={index}>
-              <CardHeader className="flex flex-col items-center text-center">
-                {step.icon}
-                <CardTitle className="mt-4">{step.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">{step.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Case Studies */}
-      <section id="case-studies" className="space-y-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold">Études de Cas</h2>
-          <p className="text-muted-foreground mt-2">Des résultats concrets pour nos clients</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {[
-            {
-              title: "E-commerce de Mode",
-              results: ["+156% de trafic organique", "+94% de conversions", "Top 3 pour 45 mots-clés compétitifs"],
-              duration: "6 mois",
-            },
-            {
-              title: "Cabinet d'Avocats",
-              results: [
-                "+210% de demandes de consultation",
-                "+78% de visibilité locale",
-                "Domination des recherches locales",
-              ],
-              duration: "4 mois",
-            },
-          ].map((study, index) => (
-            <Card key={index} className="overflow-hidden">
-              <div className="relative h-48">
-                <Image
-                  src={`/placeholder.svg?height=300&width=500&text=Étude+de+Cas+${index + 1}`}
-                  alt={`Étude de Cas ${index + 1}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
               <CardHeader>
-                <CardTitle>{study.title}</CardTitle>
-                <CardDescription>Durée: {study.duration}</CardDescription>
+                {step.icon}
+                <CardTitle>{step.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <h3 className="font-medium mb-2">Résultats:</h3>
-                <ul className="space-y-2">
-                  {study.results.map((result, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-primary shrink-0 mr-2" />
-                      <span>{result}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-muted-foreground">{step.description}</p>
               </CardContent>
-              <CardFooter>
-                <Button variant="outline">Voir l'étude complète</Button>
-              </CardFooter>
             </Card>
           ))}
         </div>
@@ -220,28 +233,70 @@ export default function SEOPage() {
               <label htmlFor="traffic" className="font-medium">
                 Trafic mensuel actuel
               </label>
-              <input type="number" id="traffic" placeholder="ex: 1000" className="w-full p-2 border rounded-md" />
+              <input
+                type="number"
+                id="traffic"
+                value={roiData.traffic}
+                onChange={handleRoiInputChange}
+                placeholder="ex: 1000"
+                className="w-full p-2 border rounded-md"
+              />
             </div>
 
             <div className="grid gap-2">
               <label htmlFor="conversion" className="font-medium">
                 Taux de conversion actuel (%)
               </label>
-              <input type="number" id="conversion" placeholder="ex: 2" className="w-full p-2 border rounded-md" />
+              <input
+                type="number"
+                id="conversion"
+                value={roiData.conversion}
+                onChange={handleRoiInputChange}
+                placeholder="ex: 2"
+                className="w-full p-2 border rounded-md"
+              />
             </div>
 
             <div className="grid gap-2">
               <label htmlFor="value" className="font-medium">
                 Valeur moyenne d'une conversion (€)
               </label>
-              <input type="number" id="value" placeholder="ex: 100" className="w-full p-2 border rounded-md" />
+              <input
+                type="number"
+                id="value"
+                value={roiData.value}
+                onChange={handleRoiInputChange}
+                placeholder="ex: 100"
+                className="w-full p-2 border rounded-md"
+              />
             </div>
 
-            <Button>Calculer mon ROI</Button>
+            <Button onClick={calculateROI}>Calculer mon ROI</Button>
 
-            <div className="p-4 bg-primary/10 rounded-md text-center">
-              <p className="text-sm text-muted-foreground">Les résultats s'afficheront ici</p>
-            </div>
+            {roiResult && (
+              <div className="p-6 bg-primary/10 rounded-md space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-background rounded-lg">
+                    <p className="text-sm text-muted-foreground">Revenu mensuel actuel</p>
+                    <p className="text-xl font-bold">{roiResult.currentRevenue.toLocaleString('fr-FR')}€</p>
+                  </div>
+                  <div className="p-4 bg-background rounded-lg">
+                    <p className="text-sm text-muted-foreground">Revenu mensuel projeté</p>
+                    <p className="text-xl font-bold">{roiResult.projectedRevenue.toLocaleString('fr-FR')}€</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-background rounded-lg">
+                    <p className="text-sm text-muted-foreground">Augmentation potentielle</p>
+                    <p className="text-xl font-bold text-green-600">+{roiResult.potentialIncrease.toLocaleString('fr-FR')}€</p>
+                  </div>
+                  <div className="p-4 bg-background rounded-lg">
+                    <p className="text-sm text-muted-foreground">ROI estimé</p>
+                    <p className="text-xl font-bold text-primary">{roiResult.roi.toFixed(1)}%</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -250,7 +305,7 @@ export default function SEOPage() {
       <section className="space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold">Questions Fréquentes</h2>
-          <p className="text-muted-foreground mt-2">Tout ce que vous devez savoir sur le SEO</p>
+          <p className="text-muted-foreground mt-2">Tout ce que vous devez savoir sur nos services SEO</p>
         </div>
 
         <Accordion type="single" collapsible className="w-full max-w-3xl mx-auto">
@@ -258,17 +313,7 @@ export default function SEOPage() {
             {
               question: "Combien de temps faut-il pour voir des résultats SEO ?",
               answer:
-                "Le SEO est un investissement à long terme. Les premiers résultats sont généralement visibles après 3 à 6 mois, mais les effets les plus significatifs se manifestent souvent après 6 à 12 mois de travail continu. Cela dépend également de la concurrence dans votre secteur et de l'état initial de votre site.",
-            },
-            {
-              question: "Comment mesurez-vous le succès d'une campagne SEO ?",
-              answer:
-                "Nous mesurons le succès à travers plusieurs indicateurs clés : l'augmentation du trafic organique, l'amélioration des positions pour les mots-clés ciblés, l'augmentation du taux de conversion, la croissance des leads ou des ventes générés par le trafic organique, et le retour sur investissement global.",
-            },
-            {
-              question: "Le SEO fonctionne-t-il pour tous les types d'entreprises ?",
-              answer:
-                "Oui, le SEO peut bénéficier à pratiquement tous les types d'entreprises, mais la stratégie doit être adaptée à votre secteur, votre audience et vos objectifs spécifiques. Certains secteurs très concurrentiels peuvent nécessiter plus de temps et d'investissement pour obtenir des résultats significatifs.",
+                "Les résultats SEO sont généralement visibles après 3 à 6 mois de travail régulier. Cependant, certains facteurs comme l'âge du domaine, la concurrence et la qualité du contenu peuvent influencer ce délai. Nous fournissons des rapports réguliers pour suivre les progrès.",
             },
             {
               question: "Quelle est la différence entre le SEO et le SEA (Google Ads) ?",
@@ -299,6 +344,18 @@ export default function SEOPage() {
           <Link href="/contact">Demander un audit gratuit</Link>
         </Button>
       </section>
+
+      {selectedPlan && (
+        <CheckoutModal
+          isOpen={isCheckoutOpen}
+          onClose={() => {
+            setIsCheckoutOpen(false)
+            setSelectedPlan(null)
+          }}
+          plan={selectedPlan}
+          serviceType="seo"
+        />
+      )}
     </div>
   )
 }

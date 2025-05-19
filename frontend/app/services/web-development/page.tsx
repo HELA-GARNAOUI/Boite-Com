@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -5,8 +8,27 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Image from "next/image"
 import Link from "next/link"
 import { Check, Code, Database, Globe, Layers, Rocket } from "lucide-react"
+import { CheckoutModal } from "@/components/checkout/checkout-modal"
 
 export default function WebDevelopmentPage() {
+  const [selectedPlan, setSelectedPlan] = useState<{
+    title: string
+    price: string
+    description: string
+    features: string[]
+  } | null>(null)
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false)
+
+  const handlePlanSelect = (plan: {
+    title: string
+    price: string
+    description: string
+    features: string[]
+  }) => {
+    setSelectedPlan(plan)
+    setIsCheckoutOpen(true)
+  }
+
   return (
     <div className="container mx-auto py-12 space-y-16">
       {/* Hero Section */}
@@ -191,7 +213,11 @@ export default function WebDevelopmentPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full" variant={plan.highlighted ? "default" : "outline"}>
+                  <Button 
+                    className="w-full" 
+                    variant={plan.highlighted ? "default" : "outline"}
+                    onClick={() => handlePlanSelect(plan)}
+                  >
                     Choisir ce forfait
                   </Button>
                 </CardFooter>
@@ -200,73 +226,151 @@ export default function WebDevelopmentPage() {
           </TabsContent>
 
           <TabsContent value="ecommerce" className="grid md:grid-cols-3 gap-6">
-            {/* Similar structure for e-commerce plans */}
-            <Card className="flex flex-col">
-              <CardHeader>
-                <CardTitle>Boutique Starter</CardTitle>
-                <CardDescription>Pour démarrer votre activité en ligne</CardDescription>
-                <div className="mt-4">
-                  <span className="text-3xl font-bold">3 500€</span>
-                </div>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <ul className="space-y-2">
-                  {[
-                    "Jusqu'à 100 produits",
-                    "Paiement sécurisé",
-                    "Gestion des stocks",
-                    "Mobile-friendly",
-                    "Support 3 mois",
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-primary shrink-0 mr-2" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full" variant="outline">
-                  Choisir ce forfait
-                </Button>
-              </CardFooter>
-            </Card>
-
-            {/* Add more e-commerce plans here */}
+            {[
+              {
+                title: "Boutique Starter",
+                price: "3 500€",
+                description: "Pour démarrer votre activité en ligne",
+                features: [
+                  "Jusqu'à 100 produits",
+                  "Paiement sécurisé",
+                  "Gestion des stocks",
+                  "Mobile-friendly",
+                  "Support 3 mois",
+                ],
+              },
+              {
+                title: "Boutique Pro",
+                price: "7 000€",
+                description: "Pour les boutiques en croissance",
+                features: [
+                  "Jusqu'à 500 produits",
+                  "Multi-paiements",
+                  "Gestion avancée des stocks",
+                  "Marketing automation",
+                  "Support 6 mois",
+                  "Formation incluse",
+                ],
+                highlighted: true,
+              },
+              {
+                title: "Boutique Enterprise",
+                price: "15 000€",
+                description: "Solution e-commerce complète",
+                features: [
+                  "Produits illimités",
+                  "Multi-boutiques",
+                  "API personnalisée",
+                  "Intégration ERP",
+                  "Support 1 an",
+                  "Formation complète",
+                  "Maintenance incluse",
+                ],
+              },
+            ].map((plan, index) => (
+              <Card key={index} className={`flex flex-col ${plan.highlighted ? "border-primary shadow-lg" : ""}`}>
+                <CardHeader>
+                  <CardTitle>{plan.title}</CardTitle>
+                  <CardDescription>{plan.description}</CardDescription>
+                  <div className="mt-4">
+                    <span className="text-3xl font-bold">{plan.price}</span>
+                  </div>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <ul className="space-y-2">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <Check className="h-5 w-5 text-primary shrink-0 mr-2" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button 
+                    className="w-full" 
+                    variant={plan.highlighted ? "default" : "outline"}
+                    onClick={() => handlePlanSelect(plan)}
+                  >
+                    Choisir ce forfait
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </TabsContent>
 
           <TabsContent value="application" className="grid md:grid-cols-3 gap-6">
-            {/* Similar structure for application plans */}
-            <Card className="flex flex-col">
-              <CardHeader>
-                <CardTitle>Application Standard</CardTitle>
-                <CardDescription>Pour les besoins métier spécifiques</CardDescription>
-                <div className="mt-4">
-                  <span className="text-3xl font-bold">Sur devis</span>
-                </div>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <ul className="space-y-2">
-                  {[
-                    "Analyse des besoins",
-                    "Développement sur mesure",
-                    "Tests & assurance qualité",
-                    "Formation utilisateurs",
-                    "Support technique",
-                  ].map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-primary shrink-0 mr-2" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full">Demander un devis</Button>
-              </CardFooter>
-            </Card>
-
-            {/* Add more application plans here */}
+            {[
+              {
+                title: "Application Standard",
+                price: "Sur devis",
+                description: "Pour les besoins métier spécifiques",
+                features: [
+                  "Analyse des besoins",
+                  "Développement sur mesure",
+                  "Tests & assurance qualité",
+                  "Formation utilisateurs",
+                  "Support technique",
+                ],
+              },
+              {
+                title: "Application Pro",
+                price: "Sur devis",
+                description: "Pour les applications complexes",
+                features: [
+                  "Analyse approfondie",
+                  "Architecture scalable",
+                  "API RESTful",
+                  "Tests automatisés",
+                  "Documentation complète",
+                  "Support premium",
+                ],
+                highlighted: true,
+              },
+              {
+                title: "Application Enterprise",
+                price: "Sur devis",
+                description: "Solution complète pour grandes entreprises",
+                features: [
+                  "Consulting stratégique",
+                  "Architecture microservices",
+                  "Sécurité avancée",
+                  "Monitoring 24/7",
+                  "Support dédié",
+                  "Formation complète",
+                  "Maintenance évolutive",
+                ],
+              },
+            ].map((plan, index) => (
+              <Card key={index} className={`flex flex-col ${plan.highlighted ? "border-primary shadow-lg" : ""}`}>
+                <CardHeader>
+                  <CardTitle>{plan.title}</CardTitle>
+                  <CardDescription>{plan.description}</CardDescription>
+                  <div className="mt-4">
+                    <span className="text-3xl font-bold">{plan.price}</span>
+                  </div>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <ul className="space-y-2">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <Check className="h-5 w-5 text-primary shrink-0 mr-2" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button 
+                    className="w-full" 
+                    variant={plan.highlighted ? "default" : "outline"}
+                    onClick={() => handlePlanSelect(plan)}
+                  >
+                    Demander un devis
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </TabsContent>
         </Tabs>
       </section>
@@ -365,6 +469,18 @@ export default function WebDevelopmentPage() {
           <Link href="/contact">Demander un devis gratuit</Link>
         </Button>
       </section>
+
+      {selectedPlan && (
+        <CheckoutModal
+          isOpen={isCheckoutOpen}
+          onClose={() => {
+            setIsCheckoutOpen(false)
+            setSelectedPlan(null)
+          }}
+          plan={selectedPlan}
+          serviceType="web-development"
+        />
+      )}
     </div>
   )
 }

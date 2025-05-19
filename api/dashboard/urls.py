@@ -1,6 +1,10 @@
-from django.urls import path
-from .views import DashboardListView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import DashboardViewSet
+
+router = DefaultRouter()
+router.register('', DashboardViewSet, basename='dashboard')
 
 urlpatterns = [
-    path('', DashboardListView.as_view(), name='dashboard-list'),
+    path('', include(router.urls)),
 ] 

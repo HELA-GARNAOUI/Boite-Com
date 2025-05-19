@@ -13,31 +13,55 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, min_length=8)
-    confirm_password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, min_length=8, required=True)
+    confirm_password = serializers.CharField(write_only=True, required=True)
+    first_name = serializers.CharField(required=True, allow_blank=False)
+    last_name = serializers.CharField(required=True, allow_blank=False)
+    email = serializers.EmailField(required=True)
     
     class Meta:
         model = User
         fields = ('email', 'password', 'confirm_password', 'first_name', 'last_name')
     
+    def validate_email(self, value):
+        if not value:
+            raise serializers.ValidationError("Email is required.")
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email already exists.")
+        return value
+    
     def validate(self, data):
+        if not data.get('password'):
+            raise serializers.ValidationError({"password": "Password is required."})
+        if not data.get('confirm_password'):
+            raise serializers.ValidationError({"confirm_password": "Confirm password is required."})
+        if not data.get('first_name'):
+            raise serializers.ValidationError({"first_name": "First name is required."})
+        if not data.get('last_name'):
+            raise serializers.ValidationError({"last_name": "Last name is required."})
+            
         password = data.get('password')
         confirm_password = data.pop('confirm_password', None)
         
         if password != confirm_password:
-            raise serializers.ValidationError("Passwords don't match")
+            raise serializers.ValidationError({
+                "confirm_password": "Passwords don't match"
+            })
         
         return data
     
     def create(self, validated_data):
-        user = User.objects.create_user(
-            email=validated_data['email'],
-            password=validated_data['password'],
-            first_name=validated_data.get('first_name', ''),
-            last_name=validated_data.get('last_name', ''),
-            role='client'
-        )
-        return user
+        try:
+            user = User.objects.create_user(
+                email=validated_data['email'],
+                password=validated_data['password'],
+                first_name=validated_data.get('first_name', ''),
+                last_name=validated_data.get('last_name', ''),
+                role='client'
+            )
+            return user
+        except Exception as e:
+            raise serializers.ValidationError(f"Error creating user: {str(e)}")
 
 
 class ClientProfileSerializer(serializers.ModelSerializer):

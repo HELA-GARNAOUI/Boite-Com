@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "home": "Home",
+    "services": "Services",
+    "webDevelopment": "Web Development",
+    "seo": "SEO",
+    "socialMedia": "Social Media",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "clientArea": "Client Area"
+  },
+  "cta": {
+    "getQuote": "Get a Quote"
+  },
+  "language": {
+    "change": "Change language",
+    "fr": "Français",
+    "en": "English",
+    "ar": "العربية"
+  }
+} 

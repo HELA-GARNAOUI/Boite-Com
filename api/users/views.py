@@ -1,9 +1,11 @@
+import logging
 from django.contrib.auth import get_user_model
 from rest_framework import status, viewsets, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from .serializers import (
     UserRegistrationSerializer, 
     UserSerializer, 
@@ -13,6 +15,7 @@ from .serializers import (
 from .models import ClientProfile
 from .permissions import IsOwnProfile, IsAdminUser
 
+logger = logging.getLogger(__name__)
 User = get_user_model()
 
 
@@ -25,39 +28,83 @@ class RegisterAPIView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            refresh = RefreshToken.for_user(user)
+        try:
+            logger.info(f"Registration request data: {request.data}")
+            serializer = self.get_serializer(data=request.data)
             
-            # Create client profile for the user
-            ClientProfile.objects.create(
-                user=user,
-                company_name=request.data.get('company_name', ''),
-                industry=request.data.get('industry', '')
-            )
+            if not serializer.is_valid():
+                logger.error(f"Registration validation errors: {serializer.errors}")
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
+            try:
+                user = serializer.save()
+                refresh = RefreshToken.for_user(user)
+                
+                # Create client profile for the user
+                try:
+                    ClientProfile.objects.create(
+                        user=user,
+                        company_name=request.data.get('company_name', ''),
+                        industry=request.data.get('industry', '')
+                    )
+                except Exception as profile_error:
+                    logger.error(f"Error creating client profile: {str(profile_error)}")
+                    # Don't fail registration if profile creation fails
+                    pass
+                
+                return Response({
+                    'user': UserSerializer(user).data,
+                    'access': str(refresh.access_token),
+                    'refresh': str(refresh)
+                }, status=status.HTTP_201_CREATED)
+                
+            except Exception as save_error:
+                logger.error(f"Error saving user: {str(save_error)}")
+                return Response({
+                    'detail': f"Error creating user: {str(save_error)}"
+                }, status=status.HTTP_400_BAD_REQUEST)
+                
+        except Exception as e:
+            logger.error(f"Unexpected registration error: {str(e)}")
             return Response({
-                'user': UserSerializer(user).data,
-                'access': str(refresh.access_token),
-                'refresh': str(refresh)
-            }, status=status.HTTP_201_CREATED)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                'detail': f"An unexpected error occurred: {str(e)}"
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class OdooLoginView(TokenObtainPairView):
+class OdooLoginView(APIView):
     """
-    API endpoint for login with Odoo integration
+    API endpoint for login with email and password
     """
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request, *args, **kwargs):
-        response = super().post(request, *args, **kwargs)
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if not email or not password:
+            return Response({
+                'detail': 'Please provide both email and password.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(request=request, email=email, password=password)
+
+        if not user:
+            return Response({
+                'detail': 'Invalid email or password.'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        if not user.is_active:
+            return Response({
+                'detail': 'User account is disabled.'
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+        refresh = RefreshToken.for_user(user)
         
-        # Here you would validate with Odoo
-        # This is a placeholder for Odoo integration
-        # You would replace this with actual Odoo API calls
-        
-        return response
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+            'user': UserSerializer(user).data
+        })
 
 
 class LogoutAPIView(APIView):

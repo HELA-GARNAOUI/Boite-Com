@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -6,8 +9,12 @@ import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, Clock, Search, User } from "lucide-react"
+import { NewsletterForm } from '@/components/newsletter/newsletter-form'
 
 export default function BlogPage() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [activeTab, setActiveTab] = useState("all")
+
   // Mock blog posts data
   const blogPosts = Array.from({ length: 9 }, (_, i) => ({
     id: i + 1,
@@ -20,6 +27,19 @@ export default function BlogPage() {
     category: i % 3 === 0 ? "Marketing Digital" : i % 3 === 1 ? "SEO" : "Web Design",
     image: `/placeholder.svg?height=300&width=500&text=Article+${i + 1}`,
   }))
+
+  // Filter posts based on search query and active tab
+  const filteredPosts = blogPosts.filter((post) => {
+    const matchesSearch = searchQuery === "" || 
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.category.toLowerCase().includes(searchQuery.toLowerCase())
+    
+    const matchesTab = activeTab === "all" || 
+      post.category.toLowerCase().includes(activeTab)
+
+    return matchesSearch && matchesTab
+  })
 
   // Mock popular posts
   const popularPosts = blogPosts.slice(0, 4)
@@ -38,15 +58,20 @@ export default function BlogPage() {
         <div className="max-w-md mx-auto flex gap-2">
           <div className="relative flex-grow">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input placeholder="Rechercher un article..." className="pl-10" />
+            <Input 
+              placeholder="Rechercher un article..." 
+              className="pl-10"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-          <Button>Rechercher</Button>
+          <Button onClick={() => setSearchQuery("")}>Effacer</Button>
         </div>
       </section>
 
       {/* Categories */}
       <section>
-        <Tabs defaultValue="all" className="w-full">
+        <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-4 md:grid-cols-6 mb-8">
             <TabsTrigger value="all">Tous</TabsTrigger>
             <TabsTrigger value="marketing">Marketing</TabsTrigger>
@@ -58,7 +83,7 @@ export default function BlogPage() {
 
           <TabsContent value="all" className="mt-0">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {blogPosts.map((post) => (
+              {filteredPosts.map((post) => (
                 <Card key={post.id} className="overflow-hidden flex flex-col">
                   <div className="relative h-48">
                     <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
@@ -96,16 +121,24 @@ export default function BlogPage() {
               ))}
             </div>
 
-            <div className="flex justify-center mt-8">
-              <Button variant="outline">Charger plus d'articles</Button>
-            </div>
+            {filteredPosts.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">Aucun article trouvé pour votre recherche.</p>
+              </div>
+            )}
+
+            {filteredPosts.length > 0 && (
+              <div className="flex justify-center mt-8">
+                <Button variant="outline">Charger plus d'articles</Button>
+              </div>
+            )}
           </TabsContent>
 
           {/* Other tabs would have similar content structure */}
           {["marketing", "seo", "webdesign", "social", "tech"].map((tab) => (
             <TabsContent key={tab} value={tab} className="mt-0">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {blogPosts
+                {filteredPosts
                   .filter((post) => post.category.toLowerCase().includes(tab))
                   .map((post) => (
                     <Card key={post.id} className="overflow-hidden flex flex-col">
@@ -277,10 +310,7 @@ export default function BlogPage() {
             <p className="text-sm text-muted-foreground mb-4">
               Recevez nos derniers articles et actualités directement dans votre boîte mail.
             </p>
-            <div className="space-y-4">
-              <Input placeholder="Votre adresse email" />
-              <Button className="w-full">S'abonner</Button>
-            </div>
+            <NewsletterForm />
             <p className="text-xs text-muted-foreground mt-2">
               En vous inscrivant, vous acceptez notre politique de confidentialité.
             </p>
