@@ -6,7 +6,7 @@ __pycache__/
 node_modules/
 
 # Ignore environment files
-.venv/
+venv/
 .env
 api/config.env
 odoo/.env
