@@ -3,7 +3,10 @@
 ## 📜 1. Présentation Générale
 
 **Boite Com**
-**Type de projet :** Création d'une agence digitale spécialisée en création web, SEO, gestion de réseaux sociaux et intégration d'un ERP.
+DigiFlow Agency est une agence digitale innovante spécialisée en création web, SEO, social media et intégration ERP.
+Ce projet vise à proposer une plateforme intelligente alliant communication, technologie et gestion d’entreprise.
+Grâce à Next.js, Django et Odoo, l’agence offrira une expérience fluide, automatisée et orientée performance.
+
 
 ---
 
