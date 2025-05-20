@@ -6,12 +6,12 @@ import { Calendar, Clock } from "lucide-react"
 export default function BlogPreview() {
   const posts = [
     {
-      title: "10 tendances SEO à suivre en 2023",
+      title: "Les tendances SEO à suivre en 2025",
       excerpt:
-        "Découvrez les dernières tendances en matière de référencement naturel pour optimiser votre stratégie digitale.",
-      date: "15/05/2023",
-      readTime: "5 min",
-      image: "/placeholder.svg?height=300&width=500&text=SEO+Trends",
+        "Découvrez les prévisions des experts sur l'évolution du référencement naturel et les nouvelles stratégies à adopter pour rester compétitif.",
+      date: "15/03/2024",
+      readTime: "8 min",
+      image: "/images/seo-trends-2025.jpg",
     },
     {
       title: "Comment créer une stratégie de contenu efficace",
@@ -19,7 +19,7 @@ export default function BlogPreview() {
         "Apprenez à élaborer une stratégie de contenu qui engage votre audience et convertit les visiteurs en clients.",
       date: "02/05/2023",
       readTime: "7 min",
-      image: "/placeholder.svg?height=300&width=500&text=Content+Strategy",
+      image: "/images/post2.jpg",
     },
     {
       title: "L'importance du design UX dans le développement web",
@@ -27,7 +27,7 @@ export default function BlogPreview() {
         "Comprendre pourquoi l'expérience utilisateur est cruciale pour le succès de votre site web et comment l'améliorer.",
       date: "28/04/2023",
       readTime: "6 min",
-      image: "/placeholder.svg?height=300&width=500&text=UX+Design",
+      image: "/images/post3.jpg",
     },
   ]
 
@@ -58,7 +58,7 @@ export default function BlogPreview() {
                 </div>
               </div>
               <CardTitle className="line-clamp-2">
-                <Link href="/blog" className="hover:underline">
+                <Link href={`/blog/${index + 1}`} className="hover:underline">
                   {post.title}
                 </Link>
               </CardTitle>
@@ -67,7 +67,7 @@ export default function BlogPreview() {
             <CardContent className="flex-grow"></CardContent>
             <CardFooter>
               <Button variant="outline" size="sm" asChild>
-                <Link href="/blog">Lire l'article</Link>
+                <Link href={`/blog/${index + 1}`}>Lire l'article</Link>
               </Button>
             </CardFooter>
           </Card>

@@ -1,166 +1,141 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import api from '@/lib/api';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar } from 'recharts';
+import { TrendingUp, Users, DollarSign, BarChart2, PieChart as PieChartIcon, LayoutDashboard } from 'lucide-react';
 
-interface AnalyticsData {
-  campaign_performance: Array<{
-    id: number;
-    name: string;
-    impressions: number;
-    clicks: number;
-    conversions: number;
-    revenue: number;
-  }>;
-  lead_generation: Array<{
-    date: string;
-    leads: number;
-    qualified_leads: number;
-  }>;
-  conversion_rates: Array<{
-    channel: string;
-    rate: number;
-    trend: 'up' | 'down' | 'stable';
-  }>;
-}
+// Mock Data
+const revenueData = [
+  { name: 'Jan', revenue: 4000 },
+  { name: 'Feb', revenue: 3000 },
+  { name: 'Mar', revenue: 5000 },
+  { name: 'Apr', revenue: 4500 },
+  { name: 'May', revenue: 6000 },
+  { name: 'Jun', revenue: 5500 },
+  { name: 'Jul', revenue: 7000 },
+];
 
-export function DashboardAnalytics() {
-  const [data, setData] = useState<AnalyticsData>({
-    campaign_performance: [],
-    lead_generation: [],
-    conversion_rates: []
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const userDistributionData = [
+  { name: 'New Users', value: 400 },
+  { name: 'Returning Users', value: 300 },
+  { name: 'Inactive', value: 300 },
+];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await api.get<AnalyticsData>('/api/v1/dashboard/analytics/');
-        setData(response.data);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching analytics data:', err);
-        setError('Failed to load analytics data. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
+const salesByCategoryData = [
+  { category: 'Category A', sales: 200 },
+  { category: 'Category B', sales: 300 },
+  { category: 'Category C', sales: 150 },
+  { category: 'Category D', sales: 250 },
+];
 
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-red-500">{error}</div>
-      </div>
-    );
-  }
-
+const Analytics = () => {
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Campaign Performance</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2">Campaign</th>
-                  <th className="text-right py-2">Impressions</th>
-                  <th className="text-right py-2">Clicks</th>
-                  <th className="text-right py-2">Conversions</th>
-                  <th className="text-right py-2">Revenue</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.campaign_performance.map((campaign) => (
-                  <tr key={campaign.id} className="border-b">
-                    <td className="py-2">{campaign.name}</td>
-                    <td className="text-right py-2">{campaign.impressions.toLocaleString()}</td>
-                    <td className="text-right py-2">{campaign.clicks.toLocaleString()}</td>
-                    <td className="text-right py-2">{campaign.conversions.toLocaleString()}</td>
-                    <td className="text-right py-2">${campaign.revenue.toLocaleString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* Overview Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex items-center justify-between">
+            <div className="p-2 rounded-lg bg-blue-500/10">
+              <TrendingUp className="w-6 h-6 text-blue-500" />
+            </div>
+            <span className="text-sm text-green-500">+12.5%</span>
           </div>
-        </CardContent>
-      </Card>
+          <h3 className="mt-4 text-2xl font-bold text-gray-800">$45,231</h3>
+          <p className="text-sm text-gray-500">Total Revenue</p>
+        </div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex items-center justify-between">
+            <div className="p-2 rounded-lg bg-purple-500/10">
+              <Users className="w-6 h-6 text-purple-500" />
+            </div>
+            <span className="text-sm text-green-500">+8.2%</span>
+          </div>
+          <h3 className="mt-4 text-2xl font-bold text-gray-800">2,543</h3>
+          <p className="text-sm text-gray-500">Active Users</p>
+        </div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex items-center justify-between">
+            <div className="p-2 rounded-lg bg-green-500/10">
+              <DollarSign className="w-6 h-6 text-green-500" />
+            </div>
+            <span className="text-sm text-red-500">-2.4%</span>
+          </div>
+          <h3 className="mt-4 text-2xl font-bold text-gray-800">$1,234</h3>
+          <p className="text-sm text-gray-500">Average Order Value</p>
+        </div>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Lead Generation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2">Date</th>
-                  <th className="text-right py-2">Total Leads</th>
-                  <th className="text-right py-2">Qualified Leads</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.lead_generation.map((lead) => (
-                  <tr key={lead.date} className="border-b">
-                    <td className="py-2">{new Date(lead.date).toLocaleDateString()}</td>
-                    <td className="text-right py-2">{lead.leads.toLocaleString()}</td>
-                    <td className="text-right py-2">{lead.qualified_leads.toLocaleString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Revenue Chart */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Revenue Overview</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={revenueData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="revenue" stroke="#8884d8" activeDot={{ r: 8 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Conversion Rates by Channel</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2">Channel</th>
-                  <th className="text-right py-2">Rate</th>
-                  <th className="text-right py-2">Trend</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.conversion_rates.map((rate) => (
-                  <tr key={rate.channel} className="border-b">
-                    <td className="py-2">{rate.channel}</td>
-                    <td className="text-right py-2">{(rate.rate * 100).toFixed(1)}%</td>
-                    <td className="text-right py-2">
-                      {rate.trend === 'up' && '↑'}
-                      {rate.trend === 'down' && '↓'}
-                      {rate.trend === 'stable' && '→'}
-                    </td>
-                  </tr>
+        {/* User Distribution */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">User Distribution</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={userDistributionData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+              >
+                {userDistributionData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
-              </tbody>
-            </table>
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Sales by Category */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Sales by Category</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={salesByCategoryData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="category" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="sales" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Conversion Rate (Placeholder - you can add a relevant chart here) */}
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">Conversion Rate</h3>
+          <div className="h-[300px] flex items-center justify-center bg-gray-50 rounded-lg">
+             {/* Add your Conversion Rate chart here, e.g., an Area Chart or another Line Chart */}
+            <BarChart2 className="w-12 h-12 text-gray-400" />
+            <span className="ml-2 text-gray-500">Conversion rate chart placeholder</span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
-} 
+};
+
+export default Analytics; 

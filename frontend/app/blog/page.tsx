@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react"
+// import { Metadata } from "next" // Removed metadata import
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -11,40 +12,64 @@ import Link from "next/link"
 import { Calendar, Clock, Search, User } from "lucide-react"
 import { NewsletterForm } from '@/components/newsletter/newsletter-form'
 
-// Stable initial blog posts data
-const initialBlogPosts = [
+// Define a type for your blog posts
+export interface BlogPost {
+  id: number;
+  title: string;
+  excerpt: string;
+  content: string;
+  date: string;
+  author: string;
+  readTime: string;
+  category: string;
+  image: string;
+  tags: string[];
+}
+
+// Initial blog posts data
+export const initialBlogPosts: BlogPost[] = [
   {
     id: 1,
-    title: "Comment améliorer votre présence en ligne",
-    excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    title: "Les tendances SEO en 2025",
+    excerpt: "Découvrez les dernières tendances en matière de référencement naturel et comment les mettre en œuvre pour votre site web.",
+    content: "Contenu détaillé de l'article sur les tendances SEO...",
     date: "15/03/2024",
     author: "Jean Dupont",
     readTime: "5 min",
-    category: "Marketing Digital",
-    image: "/placeholder.svg?height=300&width=500&text=Article+1",
+    category: "SEO",
+    image: "/images/seo-trends-2025.jpg",
+    tags: ["SEO", "Marketing Digital", "Tendances"]
   },
   {
     id: 2,
-    title: "Les tendances SEO en 2024",
-    excerpt: "Découvrez les dernières tendances en matière de référencement et comment les appliquer à votre site web.",
+    title: "L'importance de la présence en ligne",
+    excerpt: "Pourquoi une présence en ligne forte est essentielle pour les entreprises modernes.",
+    content: "Contenu détaillé sur l'importance de la présence en ligne...",
     date: "10/03/2024",
     author: "Marie Martin",
-    readTime: "7 min",
-    category: "SEO",
-    image: "/placeholder.svg?height=300&width=500&text=Article+2",
+    readTime: "4 min",
+    category: "Marketing Digital",
+    image: "/images/presence-en-line.jpeg", // Corrected extension
+    tags: ["Présence en ligne", "Marketing Digital"]
   },
   {
     id: 3,
-    title: "Optimiser l'expérience utilisateur",
-    excerpt: "Apprenez à créer une expérience utilisateur optimale pour vos visiteurs et clients.",
+    title: "Optimiser votre site pour les mobiles",
+    excerpt: "Les meilleures pratiques pour rendre votre site web parfaitement adapté aux appareils mobiles.",
+    content: "Contenu détaillé sur l'optimisation mobile...",
     date: "05/03/2024",
     author: "Pierre Durand",
     readTime: "6 min",
-    category: "Web Design",
-    image: "/placeholder.svg?height=300&width=500&text=Article+3",
-  },
-  // Add more stable blog posts as needed
-]
+    category: "Développement Web",
+    image: "/images/mobile-optimization.jpg",
+    tags: ["Mobile", "Développement Web", "UX"]
+  }
+];
+
+// export const metadata: Metadata = { // Moved metadata export
+//   title: "Blog | Boite Com",
+//   description: "Découvrez nos derniers articles sur le marketing digital, le développement web et le SEO.",
+// }
 
 export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -78,308 +103,81 @@ export default function BlogPage() {
   }
 
   return (
-    <div className="container mx-auto py-12 space-y-12">
-      {/* Hero Section */}
-      <section className="text-center space-y-6">
-        <h1 className="text-4xl md:text-5xl font-bold">Blog & Actualités</h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          Découvrez nos derniers articles, conseils et actualités sur le marketing digital, le SEO et le développement
-          web.
-        </p>
-
-        {/* Search Bar */}
-        <div className="max-w-md mx-auto flex gap-2">
-          <div className="relative flex-grow">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input 
-              placeholder="Rechercher un article..." 
-              className="pl-10"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-          <Button onClick={() => setSearchQuery("")}>Effacer</Button>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section>
-        <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
-          <TabsList className="grid grid-cols-4 md:grid-cols-6 mb-8">
-            <TabsTrigger value="all">Tous</TabsTrigger>
-            <TabsTrigger value="marketing">Marketing</TabsTrigger>
-            <TabsTrigger value="seo">SEO</TabsTrigger>
-            <TabsTrigger value="webdesign">Web Design</TabsTrigger>
-            <TabsTrigger value="social">Social Media</TabsTrigger>
-            <TabsTrigger value="tech">Technologie</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="all" className="mt-0">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPosts.map((post) => (
-                <Card key={post.id} className="overflow-hidden flex flex-col">
-                  <div className="relative h-48">
-                    <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
-                  </div>
-                  <CardHeader>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="secondary">{post.category}</Badge>
-                      <div className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {post.readTime}
-                      </div>
-                    </div>
-                    <CardTitle className="line-clamp-2">
-                      <Link href={`/blog/${post.id}`} className="hover:underline">
-                        {post.title}
-                      </Link>
-                    </CardTitle>
-                    <CardDescription className="flex items-center gap-2">
-                      <Calendar className="h-3 w-3" />
-                      {post.date}
-                      <span className="mx-1">•</span>
-                      <User className="h-3 w-3" />
-                      {post.author}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-grow">
-                    <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/blog/${post.id}`}>Lire l'article</Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8">Blog</h1>
+        
+        {/* Search and Filter Section */}
+        <div className="mb-12">
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                <Input
+                  placeholder="Rechercher un article..."
+                  className="pl-10"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
             </div>
+            <Tabs defaultValue="all" className="w-full md:w-auto">
+              <TabsList className="grid w-full md:w-auto grid-cols-3 md:grid-cols-5">
+                <TabsTrigger value="all">Tous</TabsTrigger>
+                <TabsTrigger value="seo">SEO</TabsTrigger>
+                <TabsTrigger value="marketing">Marketing</TabsTrigger>
+                <TabsTrigger value="web">Web</TabsTrigger>
+                <TabsTrigger value="social">Social</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+        </div>
 
-            {filteredPosts.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">Aucun article trouvé pour votre recherche.</p>
+        {/* Blog Posts Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredPosts.map((post) => (
+            <Card key={post.id} className="overflow-hidden flex flex-col">
+              <div className="relative h-48">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  className="object-cover"
+                />
               </div>
-            )}
-
-            {filteredPosts.length > 0 && (
-              <div className="flex justify-center mt-8">
-                <Button variant="outline">Charger plus d'articles</Button>
-              </div>
-            )}
-          </TabsContent>
-
-          {/* Other tabs would have similar content structure */}
-          {["marketing", "seo", "webdesign", "social", "tech"].map((tab) => (
-            <TabsContent key={tab} value={tab} className="mt-0">
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredPosts
-                  .filter((post) => post.category.toLowerCase().includes(tab))
-                  .map((post) => (
-                    <Card key={post.id} className="overflow-hidden flex flex-col">
-                      <div className="relative h-48">
-                        <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover" />
-                      </div>
-                      <CardHeader>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="secondary">{post.category}</Badge>
-                          <div className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {post.readTime}
-                          </div>
-                        </div>
-                        <CardTitle className="line-clamp-2">
-                          <Link href={`/blog/${post.id}`} className="hover:underline">
-                            {post.title}
-                          </Link>
-                        </CardTitle>
-                        <CardDescription className="flex items-center gap-2">
-                          <Calendar className="h-3 w-3" />
-                          {post.date}
-                          <span className="mx-1">•</span>
-                          <User className="h-3 w-3" />
-                          {post.author}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="flex-grow">
-                        <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
-                      </CardContent>
-                      <CardFooter>
-                        <Button variant="outline" size="sm" asChild>
-                          <Link href={`/blog/${post.id}`}>Lire l'article</Link>
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  ))}
-              </div>
-            </TabsContent>
+              <CardHeader>
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge variant="secondary">{post.category}</Badge>
+                  <div className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Clock className="h-3 w-3" />
+                    {post.readTime}
+                  </div>
+                </div>
+                <CardTitle className="line-clamp-2">
+                  <Link href={`/blog/${post.id}`} className="hover:underline">
+                    {post.title}
+                  </Link>
+                </CardTitle>
+                <CardDescription className="flex items-center gap-2">
+                  <Calendar className="h-3 w-3" />
+                  {post.date}
+                  <span className="mx-1">•</span>
+                  <User className="h-3 w-3" />
+                  {post.author}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
+              </CardContent>
+              <CardFooter>
+                <Button variant="outline" size="sm" asChild>
+                  <Link href={`/blog/${post.id}`}>Lire l'article</Link>
+                </Button>
+              </CardFooter>
+            </Card>
           ))}
-        </Tabs>
-      </section>
-
-      {/* Sidebar and Popular Posts */}
-      <section className="grid md:grid-cols-3 gap-8">
-        <div className="md:col-span-2 space-y-8">
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Dernières Actualités</h2>
-            <div className="space-y-4">
-              {blogPosts.slice(0, 3).map((post) => (
-                <div key={post.id} className="flex gap-4 items-start border-b pb-4">
-                  <div className="relative h-20 w-20 flex-shrink-0">
-                    <Image
-                      src={post.image || "/placeholder.svg"}
-                      alt={post.title}
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-medium">
-                      <Link href={`/blog/${post.id}`} className="hover:underline">
-                        {post.title}
-                      </Link>
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1 flex items-center gap-2">
-                      <Calendar className="h-3 w-3" />
-                      {post.date}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Événements à Venir</h2>
-            <div className="space-y-4">
-              {[
-                {
-                  title: "Webinaire: Les tendances SEO en 2023",
-                  date: "15/06/2023",
-                  time: "14:00 - 15:30",
-                  location: "En ligne",
-                },
-                {
-                  title: "Workshop: Optimiser votre présence sur les réseaux sociaux",
-                  date: "22/06/2023",
-                  time: "10:00 - 12:00",
-                  location: "Paris",
-                },
-                {
-                  title: "Conférence: L'avenir du e-commerce",
-                  date: "05/07/2023",
-                  time: "09:00 - 17:00",
-                  location: "Lyon",
-                },
-              ].map((event, index) => (
-                <Card key={index}>
-                  <CardHeader>
-                    <CardTitle className="text-base">{event.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-sm space-y-1">
-                      <p className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-primary" />
-                        {event.date}, {event.time}
-                      </p>
-                      <p className="flex items-center gap-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="text-primary"
-                        >
-                          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                          <circle cx="12" cy="10" r="3" />
-                        </svg>
-                        {event.location}
-                      </p>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button size="sm" variant="outline">
-                      S'inscrire
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
         </div>
-
-        <div className="space-y-8">
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Articles Populaires</h2>
-            <div className="space-y-4">
-              {popularPosts.map((post) => (
-                <div key={post.id} className="flex gap-4 items-start border-b pb-4">
-                  <div className="relative h-16 w-16 flex-shrink-0">
-                    <Image
-                      src={post.image || "/placeholder.svg"}
-                      alt={post.title}
-                      fill
-                      className="object-cover rounded-md"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-sm">
-                      <Link href={`/blog/${post.id}`} className="hover:underline">
-                        {post.title}
-                      </Link>
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1">{post.readTime}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-primary/5 p-6 rounded-lg">
-            <h2 className="text-xl font-bold mb-4">Abonnez-vous à notre newsletter</h2>
-            <p className="text-sm text-muted-foreground mb-4">
-              Recevez nos derniers articles et actualités directement dans votre boîte mail.
-            </p>
-            <NewsletterForm />
-            <p className="text-xs text-muted-foreground mt-2">
-              En vous inscrivant, vous acceptez notre politique de confidentialité.
-            </p>
-          </div>
-
-          <div>
-            <h2 className="text-xl font-bold mb-4">Catégories</h2>
-            <div className="flex flex-wrap gap-2">
-              {[
-                "Marketing Digital",
-                "SEO",
-                "Web Design",
-                "Social Media",
-                "E-commerce",
-                "Technologie",
-                "Actualités",
-              ].map((category, index) => (
-                <Badge key={index} variant="outline" className="cursor-pointer">
-                  {category}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-primary/5 rounded-lg p-8 text-center space-y-6">
-        <h2 className="text-3xl font-bold">Besoin d'aide pour votre stratégie digitale ?</h2>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Nos experts sont là pour vous accompagner dans tous vos projets digitaux.
-        </p>
-        <Button size="lg" asChild>
-          <Link href="/contact">Contactez-nous</Link>
-        </Button>
-      </section>
+      </div>
     </div>
   )
 }

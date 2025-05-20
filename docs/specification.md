@@ -153,7 +153,6 @@
 
  -Filtrage par sujet ou date
 
--Partage facile sur les réseaux sociaux
 ```
 
 ### 📰 4. Section News / Événements  (odoo)

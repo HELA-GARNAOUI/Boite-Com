@@ -1,5 +1,5 @@
-import { DashboardNotifications } from '@/components/dashboard/notifications';
+import Notifications from '@/components/dashboard/notifications';
 
 export default function NotificationsPage() {
-  return <DashboardNotifications />;
+  return <Notifications />;
 } 

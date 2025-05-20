@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "home": "Accueil",
+    "services": "Services",
+    "webDevelopment": "Développement Web",
+    "seo": "SEO",
+    "socialMedia": "Réseaux Sociaux",
+    "about": "À Propos",
+    "contact": "Contact"
+  },
+  "auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "clientArea": "Espace Client"
+  },
+  "cta": {
+    "getQuote": "Obtenir un Devis"
+  },
+  "language": {
+    "change": "Changer de Langue",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية"
+  }
+} 

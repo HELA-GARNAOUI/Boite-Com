@@ -1,5 +1,5 @@
-import { DashboardAnalytics } from '@/components/dashboard/analytics';
+import Analytics from '@/components/dashboard/analytics';
 
 export default function AnalyticsPage() {
-  return <DashboardAnalytics />;
+  return <Analytics />;
 } 

@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, ChevronDown, Globe } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
 import Cookies from "js-cookie"
-import { useI18n, useChangeLocale } from "@/lib/i18n/client"
 
 interface NavigationItem {
   name: string
@@ -19,8 +19,8 @@ interface NavigationItem {
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const t = useI18n()
-  const changeLocale = useChangeLocale()
+  const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     // Check if user is authenticated
@@ -28,19 +28,26 @@ export default function Header() {
     setIsAuthenticated(!!accessToken)
   }, [])
 
+  const handleLanguageChange = (locale: string) => {
+    // Get the current path without the locale prefix
+    const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(-[A-Z]{2})?/, '')
+    // Navigate to the same path with the new locale
+    router.push(`/${locale}${pathWithoutLocale}`)
+  }
+
   const navigation: NavigationItem[] = [
-    { name: t("navigation.home"), href: "/" },
+    { name: "Home", href: "/" },
     { 
-      name: t("navigation.services"), 
+      name: "Services", 
       href: "/services",
       children: [
-        { name: t("navigation.webDevelopment"), href: "/services/web-development" },
-        { name: t("navigation.seo"), href: "/services/seo" },
-        { name: t("navigation.socialMedia"), href: "/services/social-media" }
+        { name: "Web Development", href: "/services/web-development" },
+        { name: "SEO", href: "/services/seo" },
+        { name: "Social Media", href: "/services/social-media" }
       ]
     },
-    { name: t("navigation.about"), href: "/apropos" },
-    { name: t("navigation.contact"), href: "/contact" },
+    { name: "About", href: "/apropos" },
+    { name: "Contact", href: "/contact" },
   ]
 
   return (
@@ -53,69 +60,6 @@ export default function Header() {
             <span className="text-sm text-muted-foreground">Agency</span>
           </Link>
         </div>
-
-        {/* Mobile menu button */}
-        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-          <SheetTrigger asChild className="lg:hidden">
-            <Button variant="ghost" size="icon" aria-label="Menu">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-            <div className="flex flex-col gap-6 mt-6">
-              {navigation.map((item: NavigationItem) => (
-                <div key={item.name} className="space-y-3">
-                  {item.children ? (
-                    <>
-                      <div className="font-medium">{item.name}</div>
-                      <div className="pl-4 space-y-2">
-                        {item.children.map((child: NavigationItem) => (
-                          <Link
-                            key={child.name}
-                            href={child.href}
-                            className="block text-muted-foreground hover:text-foreground"
-                            onClick={() => setMobileMenuOpen(false)}
-                          >
-                            {child.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="block font-medium hover:text-primary"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  )}
-                </div>
-              ))}
-              <div className="flex flex-col gap-2 mt-4">
-                {isAuthenticated ? (
-                  <>
-                    <Button asChild>
-                      <Link href="/dashboard">{t("auth.clientArea")}</Link>
-                    </Button>
-                    <Button variant="outline" asChild>
-                      <Link href="/auth/logout">{t("auth.logout")}</Link>
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button asChild>
-                      <Link href="/contact">{t("cta.getQuote")}</Link>
-                    </Button>
-                    <Button variant="outline" asChild>
-                      <Link href="/client/login">{t("auth.login")}</Link>
-                    </Button>
-                  </>
-                )}
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
 
         {/* Desktop menu */}
         <div className="hidden lg:flex lg:gap-x-8">
@@ -147,48 +91,120 @@ export default function Header() {
         </div>
 
         {/* Right section */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+        <div className="flex items-center space-x-2">
+          {/* Language Switcher */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="h-9 w-9">
                 <Globe className="h-5 w-5" />
-                <span className="sr-only">{t("language.change")}</span>
+                <span className="sr-only">Change language</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => changeLocale('fr')}>
-                {t("language.fr")}
+              <DropdownMenuItem onClick={() => handleLanguageChange('fr')}>
+                <span className="flex items-center gap-2">
+                  <span className="text-sm">Français</span>
+                </span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeLocale('en')}>
-                {t("language.en")}
+              <DropdownMenuItem onClick={() => handleLanguageChange('en')}>
+                <span className="flex items-center gap-2">
+                  <span className="text-sm">English</span>
+                </span>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => changeLocale('ar')}>
-                {t("language.ar")}
+              <DropdownMenuItem onClick={() => handleLanguageChange('ar')}>
+                <span className="flex items-center gap-2">
+                  <span className="text-sm">العربية</span>
+                </span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <ModeToggle />
 
-          {isAuthenticated ? (
-            <>
-              <Button asChild>
-                <Link href="/dashboard">{t("auth.clientArea")}</Link>
+          <div className="hidden lg:flex lg:gap-x-4">
+            {isAuthenticated ? (
+              <>
+                <Button asChild>
+                  <Link href="/dashboard">Client Area</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="/auth/logout">Logout</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" asChild>
+                  <Link href="/client/login">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/contact">Get Quote</Link>
+                </Button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <Button variant="ghost" size="icon" aria-label="Menu">
+                <Menu className="h-6 w-6" />
               </Button>
-              <Button variant="outline" asChild>
-                <Link href="/auth/logout">{t("auth.logout")}</Link>
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="outline" asChild>
-                <Link href="/client/login">{t("auth.login")}</Link>
-              </Button>
-              <Button asChild>
-                <Link href="/contact">{t("cta.getQuote")}</Link>
-              </Button>
-            </>
-          )}
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <div className="flex flex-col gap-6 mt-6">
+                {navigation.map((item: NavigationItem) => (
+                  <div key={item.name} className="space-y-3">
+                    {item.children ? (
+                      <>
+                        <div className="font-medium">{item.name}</div>
+                        <div className="pl-4 space-y-2">
+                          {item.children.map((child: NavigationItem) => (
+                            <Link
+                              key={child.name}
+                              href={child.href}
+                              className="block text-muted-foreground hover:text-foreground"
+                              onClick={() => setMobileMenuOpen(false)}
+                            >
+                              {child.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="block font-medium hover:text-primary"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    )}
+                  </div>
+                ))}
+                <div className="flex flex-col gap-2 mt-4">
+                  {isAuthenticated ? (
+                    <>
+                      <Button asChild>
+                        <Link href="/dashboard">Client Area</Link>
+                      </Button>
+                      <Button variant="outline" asChild>
+                        <Link href="/auth/logout">Logout</Link>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button asChild>
+                        <Link href="/contact">Get Quote</Link>
+                      </Button>
+                      <Button variant="outline" asChild>
+                        <Link href="/client/login">Login</Link>
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
     </header>

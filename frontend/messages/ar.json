@@ -1,0 +1,25 @@
+{
+  "navigation": {
+    "home": "الرئيسية",
+    "services": "الخدمات",
+    "webDevelopment": "تطوير الويب",
+    "seo": "تحسين محركات البحث",
+    "socialMedia": "وسائل التواصل الاجتماعي",
+    "about": "من نحن",
+    "contact": "اتصل بنا"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "clientArea": "منطقة العملاء"
+  },
+  "cta": {
+    "getQuote": "احصل على عرض سعر"
+  },
+  "language": {
+    "change": "تغيير اللغة",
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية"
+  }
+} 

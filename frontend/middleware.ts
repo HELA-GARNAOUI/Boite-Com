@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import Cookies from 'js-cookie'
 
 // Define protected routes that require authentication
 const protectedRoutes = [
@@ -43,13 +42,14 @@ export async function middleware(req: NextRequest) {
     return response
   }
 
-  // Allow the request to proceed
+  // If not protected or authenticated, continue
   return NextResponse.next()
 }
 
 // Configure which routes the middleware should run on
 export const config = {
   matcher: [
+    // Match only protected routes
     '/dashboard/:path*',
     '/profile/:path*',
     '/client/dashboard/:path*',
