@@ -13,7 +13,8 @@ interface BlogPostPageProps {
 
 // Generate metadata dynamically
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const post = initialBlogPosts.find((post: BlogPost) => post.id.toString() === params.id);
+  const postId = parseInt(params.id);
+  const post = initialBlogPosts.find((post: BlogPost) => post.id === postId);
 
   if (!post) {
     return { title: "Article non trouvé" };
@@ -36,20 +37,20 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <article className="container mx-auto px-4 py-16 max-w-4xl">
       <div className="mb-8">
-        <Link href="/blog" className="text-primary hover:underline mb-4 inline-block">
+        <Link href="/blog" className="text-primary hover:underline mb-4 inline-block text-sm font-medium">
           ← Retour aux articles
         </Link>
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
-        <div className="flex items-center gap-4 text-muted-foreground mb-8">
-          <div className="flex items-center gap-2">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{post.title}</h1>
+        <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-muted-foreground mb-8 text-sm">
+          <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             <span>{post.date}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
             <span>{post.readTime} de lecture</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <User className="h-4 w-4" />
             <span>{post.author}</span>
           </div>
@@ -71,9 +72,9 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         />
       </div>
 
-      <div className="prose prose-lg max-w-none">
+      <div className="prose prose-lg max-w-none text-gray-800">
         <p className="text-xl text-muted-foreground mb-8">{post.excerpt}</p>
-        <div className="whitespace-pre-wrap">{post.content}</div>
+        <div className="whitespace-pre-wrap leading-relaxed">{post.content}</div>
       </div>
 
       <Separator className="my-12" />
@@ -90,7 +91,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         ))}
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <Button variant="outline" asChild>
           <Link href="/blog">← Retour aux articles</Link>
         </Button>

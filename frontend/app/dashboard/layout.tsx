@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { LogoutButton } from '@/components/dashboard/logout-button';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { User, LayoutDashboard, BarChart, Settings, Bell, Package } from 'lucide-react';
+import { User, LayoutDashboard, BarChart, Settings, Bell, Package, Globe } from 'lucide-react';
 import api from '@/lib/api';
 
 interface UserData {
@@ -29,6 +29,7 @@ export default function DashboardLayout({
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setLoading(true);
         const response = await api.get<UserData>('/api/v1/auth/profile/');
         setUser(response.data);
       } catch (error) {

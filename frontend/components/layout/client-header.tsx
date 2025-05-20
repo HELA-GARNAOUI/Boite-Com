@@ -4,8 +4,8 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, ChevronDown, MessageCircle } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
+import { Menu, ChevronDown, MessageCircle, Globe } from "lucide-react"
 import { ModeToggle } from "@/components/mode-toggle"
 import Cookies from "js-cookie"
 
@@ -80,6 +80,7 @@ export default function ClientHeader() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+            <SheetTitle>Menu</SheetTitle>
             <div className="flex flex-col gap-6 mt-6">
               {navigation.map((item: NavigationItem) => (
                 <div key={item.name} className="space-y-3">
@@ -172,6 +173,19 @@ export default function ClientHeader() {
 
         {/* Right section */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
+          {/* Language Selector Placeholder (using DropdownMenu for consistent styling) */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Select language">
+                <Globe className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-20">
+              <DropdownMenuItem>FR</DropdownMenuItem>
+              <DropdownMenuItem>AR</DropdownMenuItem>
+              <DropdownMenuItem>An</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button variant="ghost" size="icon" className="relative" aria-label="Chat">
             <MessageCircle className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary text-[10px] font-medium text-primary-foreground flex items-center justify-center">

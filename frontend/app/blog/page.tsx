@@ -44,12 +44,12 @@ export const initialBlogPosts: BlogPost[] = [
     id: 2,
     title: "L'importance de la présence en ligne",
     excerpt: "Pourquoi une présence en ligne forte est essentielle pour les entreprises modernes.",
-    content: "Contenu détaillé sur l'importance de la présence en ligne...",
+    content: "Contenu détaillé sur l'importance de la présence en ligne... ",
     date: "10/03/2024",
     author: "Marie Martin",
     readTime: "4 min",
     category: "Marketing Digital",
-    image: "/images/presence-en-line.jpeg", // Corrected extension
+    image: "/images/presence-en-line.jpg", // Corrected extension
     tags: ["Présence en ligne", "Marketing Digital"]
   },
   {
@@ -61,7 +61,7 @@ export const initialBlogPosts: BlogPost[] = [
     author: "Pierre Durand",
     readTime: "6 min",
     category: "Développement Web",
-    image: "/images/mobile-optimization.jpg",
+    image: "/images/ux.png",
     tags: ["Mobile", "Développement Web", "UX"]
   }
 ];
@@ -83,13 +83,13 @@ export default function BlogPage() {
 
   // Filter posts based on search query and active tab
   const filteredPosts = blogPosts.filter((post) => {
-    const matchesSearch = searchQuery === "" || 
+    const matchesSearch = searchQuery === "" ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
       post.category.toLowerCase().includes(searchQuery.toLowerCase())
-    
-    const matchesTab = activeTab === "all" || 
-      post.category.toLowerCase().includes(activeTab)
+
+    const matchesTab = activeTab === "all" ||
+      post.category.toLowerCase().includes(activeTab.toLowerCase()) // Ensure tab comparison is also lowercase
 
     return matchesSearch && matchesTab
   })
@@ -109,20 +109,22 @@ export default function BlogPage() {
         
         {/* Search and Filter Section */}
         <div className="mb-12">
-          <div className="flex flex-col md:flex-row gap-4 mb-8">
-            <div className="flex-1">
-              <div className="relative">
+          <div className="flex flex-col gap-4 mb-8">
+            <div className="w-full flex flex-col">
+              <label htmlFor="blog-search" className="text-sm font-medium text-gray-700 mb-1">Rechercher</label>
+              <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
-                  placeholder="Rechercher un article..."
+                  id="blog-search"
+                  placeholder="Entrez des mots-clés..."
                   className="pl-10"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
             </div>
-            <Tabs defaultValue="all" className="w-full md:w-auto">
-              <TabsList className="grid w-full md:w-auto grid-cols-3 md:grid-cols-5">
+            <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
+              <TabsList className="grid w-full grid-cols-3 md:grid-cols-5">
                 <TabsTrigger value="all">Tous</TabsTrigger>
                 <TabsTrigger value="seo">SEO</TabsTrigger>
                 <TabsTrigger value="marketing">Marketing</TabsTrigger>
@@ -136,38 +138,39 @@ export default function BlogPage() {
         {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map((post) => (
-            <Card key={post.id} className="overflow-hidden flex flex-col">
-              <div className="relative h-48">
+            <Card key={post.id} className="overflow-hidden flex flex-col h-full">
+              <div className="relative h-48 w-full">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
-              <CardHeader>
+              <CardHeader className="flex-grow">
                 <div className="flex items-center gap-2 mb-2">
                   <Badge variant="secondary">{post.category}</Badge>
                   <div className="text-xs text-muted-foreground flex items-center gap-1">
                     <Clock className="h-3 w-3" />
-                    {post.readTime}
+                    <span>{post.readTime}</span>
                   </div>
                 </div>
-                <CardTitle className="line-clamp-2">
+                <CardTitle className="line-clamp-2 text-lg">
                   <Link href={`/blog/${post.id}`} className="hover:underline">
                     {post.title}
                   </Link>
                 </CardTitle>
-                <CardDescription className="flex items-center gap-2">
+                <CardDescription className="flex items-center gap-2 text-sm">
                   <Calendar className="h-3 w-3" />
-                  {post.date}
+                  <span>{post.date}</span>
                   <span className="mx-1">•</span>
                   <User className="h-3 w-3" />
-                  {post.author}
+                  <span>{post.author}</span>
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex-grow">
-                <p className="text-muted-foreground line-clamp-3">{post.excerpt}</p>
+                <p className="text-muted-foreground line-clamp-3 text-sm">{post.excerpt}</p>
               </CardContent>
               <CardFooter>
                 <Button variant="outline" size="sm" asChild>
