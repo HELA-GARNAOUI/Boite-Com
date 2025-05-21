@@ -4,10 +4,15 @@ import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 interface Message {
   id: number;
@@ -22,6 +27,14 @@ interface ChatSession {
   status: string;
   messages: Message[];
 }
+
+const FAQ_SUGGESTIONS = [
+  "Quels services proposez-vous ?",
+  "Quels sont vos tarifs ?",
+  "Comment vous contacter ?",
+  "Comment se déroule un projet avec vous ?",
+  "Pouvez-vous me montrer vos réalisations ?"
+];
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -149,6 +162,44 @@ export function ChatWidget() {
     setIsOpen(false);
   };
 
+  const handleFAQClick = async (suggestion: string) => {
+    if (!session) return;
+    
+    try {
+      setLoading(true);
+      setMessage(suggestion);
+      
+      const response = await api.post<Message[]>(`/api/v1/chat/sessions/${session.id}/send_message/`, {
+        message: suggestion,
+      }, {
+        headers: {
+          'X-Skip-Auth': 'true',
+          'Accept': 'application/json',
+        },
+        withCredentials: true
+      });
+      
+      console.log('Réponse du serveur:', response.data);
+      setSession(prev => prev ? {
+        ...prev,
+        messages: [...prev.messages, ...response.data],
+      } : null);
+      setMessage('');
+    } catch (err: any) {
+      console.error('Erreur détaillée:', err);
+      console.error('Message d\'erreur:', err.message);
+      console.error('Réponse d\'erreur:', err.response?.data);
+      
+      if (err.response?.status === 500) {
+        toast.error('Erreur serveur. Veuillez réessayer plus tard.');
+      } else {
+        toast.error(err.response?.data?.message || err.message || 'Impossible d\'envoyer le message');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (!isOpen) {
     return (
       <Button
@@ -181,6 +232,27 @@ export function ChatWidget() {
       </div>
       <div className="h-[400px] p-4 overflow-y-auto">
         <div className="space-y-4">
+          {/* FAQ Suggestions - Always visible at the top */}
+          <div className="space-y-4 mb-4">
+            <p className="text-sm text-muted-foreground text-center">
+              Comment puis-je vous aider aujourd'hui ?
+            </p>
+            <div className="grid grid-cols-1 gap-2">
+              {FAQ_SUGGESTIONS.map((suggestion, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="w-full justify-start text-left h-auto py-2"
+                  onClick={() => handleFAQClick(suggestion)}
+                  disabled={loading}
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Chat Messages */}
           {session?.messages.map((msg) => (
             <div
               key={msg.id}
